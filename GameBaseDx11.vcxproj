@@ -155,7 +155,9 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
-    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Audio.h" />
@@ -190,7 +192,9 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="ImGuiManager.h" />
-    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="Transition.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\BillBoard.hlsl">

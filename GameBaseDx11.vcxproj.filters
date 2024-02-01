@@ -83,7 +83,7 @@
     <ClCompile Include="Engine\Transform.cpp">
       <Filter>01Engine\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="TestScene.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Engine\Audio.cpp">
       <Filter>01Engine\ResourceManager</Filter>
     </ClCompile>
@@ -118,6 +118,8 @@
       <Filter>01Engine\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiManager.cpp" />
+    <ClCompile Include="Transition.cpp" />
+    <ClCompile Include="SkySphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -174,7 +176,7 @@
     <ClInclude Include="Engine\Transform.h">
       <Filter>01Engine\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="TestScene.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Engine\Audio.h">
       <Filter>01Engine\ResourceManager</Filter>
     </ClInclude>
@@ -215,6 +217,8 @@
       <Filter>01Engine\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiManager.h" />
+    <ClInclude Include="Transition.h" />
+    <ClInclude Include="SkySphere.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
