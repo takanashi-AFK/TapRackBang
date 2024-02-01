@@ -1,1 +1,2 @@
 BlueSky.png -> 学校のサーバーから(SE056)
+Planet_02.png -> unity assets SkySphere v1.0より
