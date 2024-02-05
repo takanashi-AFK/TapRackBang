@@ -157,6 +157,7 @@
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="SplashScene.cpp" />
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +195,7 @@
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="SplashScene.h" />
     <ClInclude Include="Transition.h" />
   </ItemGroup>
   <ItemGroup>

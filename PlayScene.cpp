@@ -9,7 +9,10 @@ PlayScene::PlayScene(GameObject * parent)
 //‰Šú‰»
 void PlayScene::Initialize()
 {
+	pText = new Text;
+	pText->Initialize();
 }
+
 
 //XV
 void PlayScene::Update()
@@ -19,6 +22,7 @@ void PlayScene::Update()
 //•`‰æ
 void PlayScene::Draw()
 {
+	pText->Draw(30, 30, "Play");
 }
 
 //ŠJ•ú

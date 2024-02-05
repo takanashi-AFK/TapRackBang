@@ -129,10 +129,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//入力（キーボード、マウス、コントローラー）情報を更新
 				Input::Update();
 
-				//全オブジェクトの更新処理
-				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootObject->UpdateSub();
-
 				//カメラを更新
 				Camera::Update();
 
@@ -144,6 +140,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 				ImGuiManager::DrawStart();
 				ImGuiManager::Feature();
+
+				//全オブジェクトの更新処理
+				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+				pRootObject->UpdateSub();
 
 				//全オブジェクトを描画
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる

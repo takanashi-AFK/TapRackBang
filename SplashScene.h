@@ -1,15 +1,19 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Image.h"
+#include "Engine/SceneManager.h"
 #include "Engine/Text.h"
+#include "ImGuiManager.h"
+
 
 //テストシーンを管理するクラス
-class PlayScene : public GameObject
+class SplashScene : public GameObject
 {
 	Text* pText;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	PlayScene(GameObject* parent);
+	SplashScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;

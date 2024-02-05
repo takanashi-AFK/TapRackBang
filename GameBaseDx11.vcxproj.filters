@@ -120,6 +120,7 @@
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="SplashScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -219,6 +220,7 @@
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="SplashScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
