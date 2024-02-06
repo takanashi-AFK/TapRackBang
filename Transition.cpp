@@ -1,106 +1,127 @@
 #include "Transition.h"
 
-namespace Transition {
+namespace Transition
+{
+	TRANSITION_ID type_ = TID_NONE;
+	Sprite* pSprite_[TID_MAX] = { nullptr };
 
-	Sprite* pSp[TID_MAX] = { nullptr };
-	TRANSITION_TYPE type_;
-	Transform imageTransform;
+	bool isActive_ = false;	//実行中か否か
+	bool isChange_ = false;	//シーンを変更して良いか
+	bool isFlag = false;
+	float time_ = 0;		//トランジションの再生時間
 
-	float alpha;
+	Transform transform_;	//変形行列
+	RECT rect_;				//画像サイズ
+	float alpha_;			//画像の透明度
 
 	const float FPS = 60.0f;			//フレームレート
 	const float FINISH_TIME = 510.0f;	//トランジションの終了まで掛かる時間(fps)
 	const float ALPHA_MAX = 255.0f;		//最大alpha値
 	const float ALPHA_MIN = 0.0f;		//最小alpha値
-	RECT rect;
-
-	bool isAlphaNow;
-	bool isActive;
-	bool isChange;
-	int timer;
-};
+}
 
 
-HRESULT Transition::Initialize()
+void Transition::Initialize()
 {
-	for (int i = 0; i < TID_MAX; i++) {
-		pSp[i] = new Sprite;
+	for (int i = 0; i < TID_MAX; i++)
+	{
+		pSprite_[i] = new Sprite;
 	}
-	HRESULT hr;
-
-
-	hr = pSp[TID_BLACKOUT]->Load("Transition/BlackOut.png");
-	if (hr != S_OK)return hr;
-
-	return hr;
+	pSprite_[TID_NONE]->Load("Transition/BlackOut.png");
+	pSprite_[TID_BLACKOUT]->Load("Transition/BlackOut.png");
+	pSprite_[TID_WHITEOUT]->Load("Transition/WhiteOut.png");
 }
 
 void Transition::Update()
 {
-	switch (type_)
-	{
-	case TID_NONE:
-		isChange = true; isActive = true;
-		break;
-	case TID_BLACKOUT:
-		Transition::Blackout();
-		break;
-	case TID_MAX:
-		break;
-	default:
-		isChange = true; isActive = true;
-		break;
+	if (isActive_) {
+		switch (type_)
+		{
+		case TID_NONE:	isChange_ = true; isActive_ = false; break;
+		case TID_BLACKOUT:BlackOut(); break;
+		case TID_WHITEOUT:WhiteOut(); break;
+		}
 	}
+	else InitParameter();
 }
 
 void Transition::Draw()
 {
-	pSp[type_]->Draw(imageTransform, rect, alpha/ALPHA_MAX);
+	pSprite_[type_]->Draw(transform_, rect_, (alpha_ / ALPHA_MAX));
 }
 
 void Transition::Release()
 {
+	for (int i = 0; i < TID_MAX; i++)SAFE_DELETE(pSprite_[i]);
 }
 
-void Transition::SetType(TRANSITION_TYPE tType)
+bool Transition::SetTransition(TRANSITION_ID _type)
 {
-	type_ = tType; 
+	type_ = _type; return _type != TID_NONE;
 }
 
-void Transition::SetTimer(int time)
+void Transition::SetTime(float _time)
 {
-	timer = time * FPS;
+	time_ = FINISH_TIME / (FPS * _time);
 }
 
-void Transition::Execute()
+bool Transition::IsActive()
 {
-	isActive = true;
+	return isActive_;
 }
 
-
-bool Transition::GetIsActive()
+bool Transition::InitParameter()
 {
-	return isActive;
+	isChange_ = false;
+	isFlag = false;
+	time_ = 0;
+	alpha_ = 0;
+
+	return true;
 }
 
-void Transition::Blackout()
+void Transition::Start()
 {
-	
-	rect.left   = 0;
-	rect.right  = pSp[TID_BLACKOUT]->GetTextureSize().x;
-	rect.top    = 0;
-	rect.bottom = pSp[TID_BLACKOUT]->GetTextureSize().y;
+	isActive_ = true;
+}
 
-	if (alpha >= ALPHA_MAX) {
-		isChange = true;
-		isAlphaNow = true;
+bool Transition::IsChangePoint()
+{
+	return isChange_;
+}
+
+void Transition::BlackOut()
+{
+	//Rectの初期化
+	rect_.left = 0; rect_.right = pSprite_[TID_BLACKOUT]->GetTextureSize().x;
+	rect_.top = 0; rect_.bottom = pSprite_[TID_BLACKOUT]->GetTextureSize().y;
+
+	if (alpha_ >= ALPHA_MAX) {
+		isChange_ = true;
+		isFlag = true;
 	}
 
-	if (isAlphaNow) {
-		alpha -= timer;
-		if (alpha <= ALPHA_MIN) isAlphaNow = false;
+	if (isFlag) {
+		alpha_ -= time_;
+		if (alpha_ <= ALPHA_MIN) isActive_ = false;
 	}
-	else alpha += timer;
+	else alpha_ += time_;
+}
 
+void Transition::WhiteOut()
+{
+	//Rectの初期化
+	rect_.left = 0; rect_.right = pSprite_[TID_WHITEOUT]->GetTextureSize().x;
+	rect_.top = 0; rect_.bottom = pSprite_[TID_WHITEOUT]->GetTextureSize().y;
 
+	if (alpha_ >= ALPHA_MAX) {
+		isChange_ = true;
+		isFlag = true;
+	}
+
+	if (isFlag) {
+		alpha_ -= time_;
+		if (alpha_ <= ALPHA_MIN) isActive_ = false;
+	}
+	else alpha_ += time_;
 }

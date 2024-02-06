@@ -1,14 +1,16 @@
 #include "sceneManager.h"
 
-#include "../PlayScene.h"
+//シーンオブジェクト
 #include "../SplashScene.h"
+#include "../PlayScene.h"
+
 #include "Model.h"
 #include "Image.h"
 #include "Audio.h"
 
 
 //コンストラクタ
-SceneManager::SceneManager(GameObject * parent)
+SceneManager::SceneManager(GameObject* parent)
 	: GameObject(parent, "SceneManager")
 {
 }
@@ -25,6 +27,9 @@ void SceneManager::Initialize()
 //更新
 void SceneManager::Update()
 {
+	//トランジション実行時、シーン切替のタイミングでシーンを変更する
+	if (Transition::IsChangePoint())nextSceneID_ = tmpID_;
+
 	//次のシーンが現在のシーンと違う　＝　シーンを切り替えなければならない
 	if (currentSceneID_ != nextSceneID_)
 	{
@@ -41,8 +46,8 @@ void SceneManager::Update()
 		{
 		case SCENE_ID_SPLASH: Instantiate<SplashScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
-
 		}
+
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;
 	}
@@ -59,19 +64,21 @@ void SceneManager::Release()
 }
 
 //シーン切り替え（実際に切り替わるのはこの次のフレーム）
-void SceneManager::ChangeScene(SCENE_ID next)
-{
-	nextSceneID_ = next;
-}
-
-void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_TYPE transition)
+void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type, float _time)
 {
 	//トランジションが動作中はシーン遷移を行わない
-	if (!Transition::GetIsActive()) {
+	if (!Transition::IsActive()) {
 		//トランジションを使わない場合、シーンIDをセット
-		Transition::SetType(transition);
+		if (!Transition::SetTransition(_type))nextSceneID_ = next;
+
+		//時間をセット
+		Transition::SetTime(_time);
 
 		//トランジションを開始し、シーンIDをセット
-		Transition::Execute(); tmpID_ = next;
+		Transition::Start(); tmpID_ = next;
 	}
 }
+void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_ID _type) { ChangeScene(next, _type, 2); }
+void SceneManager::ChangeScene(SCENE_ID next) { ChangeScene(next, TID_NONE); }
+
+

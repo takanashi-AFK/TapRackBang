@@ -1,5 +1,6 @@
 #include "SplashScene.h"
 #include "Transition.h"
+#include "Engine/Input.h"
 
 SplashScene::SplashScene(GameObject* parent)
 {
@@ -17,18 +18,16 @@ void SplashScene::Update()
 	ImGui::Begin("rueausu");
 	if(ImGui::Button("SceneChange")) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_PLAY);
-		delete pText;
-		Transition::Blackout();
+		pSceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
 }
 
 void SplashScene::Draw()
 {
-	pText->Draw(30, 30, "Splash");
 }
 
 void SplashScene::Release()
 {
+	SAFE_DELETE(pText);
 }

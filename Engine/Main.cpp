@@ -11,6 +11,7 @@
 #include <time.h>
 
 #include "global.h"
+#include "../Transition.h"
 #include "RootObject.h"
 #include "Model.h"
 #include "Image.h"
@@ -73,6 +74,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//オーディオ（効果音）の準備
 	Audio::Initialize();
 
+	Transition::Initialize();
 
 	//ルートオブジェクト準備
 	//すべてのゲームオブジェクトの親となるオブジェクト
@@ -144,10 +146,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//全オブジェクトの更新処理
 				//ルートオブジェクトのUpdateを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->UpdateSub();
-
+				Transition::Update();
 				//全オブジェクトを描画
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
+
+				Transition::Draw();
 
 				//エフェクトの描画
 				VFX::Draw();
@@ -173,6 +177,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Audio::AllRelease();
 	Model::AllRelease();
 	Image::AllRelease();
+	Transition::Release();
 	pRootObject->ReleaseSub();
 	SAFE_DELETE(pRootObject);
 	ImGuiManager::Release();
