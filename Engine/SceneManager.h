@@ -1,6 +1,7 @@
 #pragma once
 #include "global.h"
 #include "GameObject.h"
+#include "../Transition.h"
 //ゲームに登場するシーン
 enum SCENE_ID
 {
@@ -27,6 +28,8 @@ public:
 	//シーン切り替え（実際に切り替わるのはこの次のフレーム）
 	//引数：next	次のシーンのID
 	void ChangeScene(SCENE_ID next);
+
+	void ChangeScene(SCENE_ID next,TRANSITION_TYPE transition);
 
 private:
 	SCENE_ID currentSceneID_;	//現在のシーン

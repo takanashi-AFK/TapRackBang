@@ -1,4 +1,5 @@
 #include "SplashScene.h"
+#include "Transition.h"
 
 SplashScene::SplashScene(GameObject* parent)
 {
@@ -8,6 +9,7 @@ void SplashScene::Initialize()
 {
 	pText = new Text;
 	pText->Initialize();
+	Transition::Initialize();
 }
 
 void SplashScene::Update()
@@ -17,6 +19,7 @@ void SplashScene::Update()
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_PLAY);
 		delete pText;
+		Transition::Blackout();
 	}
 	ImGui::End();
 }

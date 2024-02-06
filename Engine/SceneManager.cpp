@@ -63,3 +63,15 @@ void SceneManager::ChangeScene(SCENE_ID next)
 {
 	nextSceneID_ = next;
 }
+
+void SceneManager::ChangeScene(SCENE_ID next, TRANSITION_TYPE transition)
+{
+	//トランジションが動作中はシーン遷移を行わない
+	if (!Transition::GetIsActive()) {
+		//トランジションを使わない場合、シーンIDをセット
+		Transition::SetType(transition);
+
+		//トランジションを開始し、シーンIDをセット
+		Transition::Execute(); tmpID_ = next;
+	}
+}
