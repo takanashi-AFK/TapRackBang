@@ -2,6 +2,8 @@
 
 //シーンオブジェクト
 #include "../SplashScene.h"
+#include "../TitleScene.h"
+#include "../MenuScene.h"
 #include "../PlayScene.h"
 
 #include "Model.h"
@@ -45,6 +47,8 @@ void SceneManager::Update()
 		switch (nextSceneID_)
 		{
 		case SCENE_ID_SPLASH: Instantiate<SplashScene>(this); break;
+		case SCENE_ID_TITLE: Instantiate<TitleScene>(this); break;
+		case SCENE_ID_MENU: Instantiate<MenuScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
 		}
 

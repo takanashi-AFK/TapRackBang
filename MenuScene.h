@@ -1,19 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/SceneManager.h"
 #include "Engine/Text.h"
 #include "ImGuiManager.h"
-#include "Engine/SceneManager.h"
-#include "Engine/Model.h"
-#include "Engine/Direct3D.h"
 
 //テストシーンを管理するクラス
-class PlayScene : public GameObject
+class MenuScene : public GameObject
 {
-	int hModel_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	PlayScene(GameObject* parent);
+	MenuScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;

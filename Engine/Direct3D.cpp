@@ -2,7 +2,8 @@
 #include "Direct3D.h"
 #include "Global.h"
 #include "Transform.h"
-
+//シェーダの初期化の部分が同じコードが繰り返されていて冗長なため、改善したい
+// 
 //画面の描画に関する処理
 namespace Direct3D
 {
@@ -356,7 +357,6 @@ namespace Direct3D
 			rdc.FrontCounterClockwise = TRUE;
 			pDevice_->CreateRasterizerState(&rdc, &shaderBundle[SHADER_BILLBOARD].pRasterizerState);
 		}
-
 	}
 
 

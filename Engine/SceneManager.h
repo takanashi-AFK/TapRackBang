@@ -6,13 +6,11 @@
 //ÉQÅ[ÉÄÇ…ìoèÍÇ∑ÇÈÉVÅ[Éì
 enum SCENE_ID
 {
-	SCENE_ID_TEST = 0,
-	SCENE_ID_SPLASH,
+	SCENE_ID_SPLASH = 0,
 	SCENE_ID_TITLE,
-	SCENE_ID_SELECT,
+	SCENE_ID_MENU,
 	SCENE_ID_PLAY,
-	SCENE_ID_RESULT,
-	SCENE_ID_END,
+
 };
 
 //-----------------------------------------------------------

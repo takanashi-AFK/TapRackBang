@@ -2,25 +2,30 @@
 #include "Transition.h"
 #include "Engine/Input.h"
 
-SplashScene::SplashScene(GameObject* parent)
+SplashScene::SplashScene(GameObject* parent) 
+	: GameObject(parent, "PlayScene")
 {
 }
 
 void SplashScene::Initialize()
 {
-	pText = new Text;
-	pText->Initialize();
+
 	Transition::Initialize();
 }
 
 void SplashScene::Update()
 {
+	static int frame;
 	ImGui::Begin("rueausu");
-	if(ImGui::Button("SceneChange")) {
+	ImGui::Text("Splash");
+
+
+	if(ImGui::Button("SceneChange") || frame >60) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT, 0.5f);
+		pSceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
+	frame++;
 }
 
 void SplashScene::Draw()
@@ -29,5 +34,4 @@ void SplashScene::Draw()
 
 void SplashScene::Release()
 {
-	SAFE_DELETE(pText);
 }

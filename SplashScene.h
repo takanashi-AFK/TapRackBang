@@ -9,7 +9,6 @@
 //テストシーンを管理するクラス
 class SplashScene : public GameObject
 {
-	Text* pText;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

@@ -155,9 +155,11 @@
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
+    <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="SplashScene.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,9 +195,11 @@
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="ImGuiManager.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="SkySphere.h" />
     <ClInclude Include="SplashScene.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transition.h" />
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +217,14 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
     <FxCompile Include="Assets\Shader\Simple3D.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Assets\Shader\SkySphereShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VS</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VS</EntryPointName>
     </FxCompile>
