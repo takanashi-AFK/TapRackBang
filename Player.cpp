@@ -21,8 +21,8 @@ void Player::Update()
 	PlayerMove();
 	//ステージのオブジェクトを探す
 		//カメラ移動
-	Camera::SetPosition(XMFLOAT3(transform_.position_.x, transform_.position_.y + 3	, transform_.position_.x));
-	Camera::SetTarget(XMFLOAT3(transform_.position_.x, transform_.position_.y,transform_.position_.z + 8));
+	Camera::SetPosition(XMFLOAT3(transform_.position_.x, transform_.position_.y + 5	, transform_.position_.z));
+	Camera::SetTarget(XMFLOAT3(transform_.position_.x, transform_.position_.y+3,transform_.position_.z + 8));
 
 }
 
@@ -78,7 +78,7 @@ void Player::PlayerMove()
 	groundRayData.dir = XMFLOAT3(0, -1, 0);
 	Model::RayCast(hGroundModelHandle_, &groundRayData);
 	if (groundRayData.hit) {
-		transform_.position_.y = 0.f;
+		transform_.position_.y = -10.f;
 	ImGui::Text("%f", groundRayData.dist);
 	}
 	///////////////////////////////////////////////////
