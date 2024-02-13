@@ -5,6 +5,7 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Model.h"
 #include "Engine/Direct3D.h"
+#include "SkySphere.h"
 
 //テストシーンを管理するクラス
 class PlayScene : public GameObject

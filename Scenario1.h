@@ -1,15 +1,19 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include "Engine/Model.h"
+#include "Engine/Text.h"
 #include "ImGuiManager.h"
 #include "Engine/SceneManager.h"
-class SkySphere :
+#include "Engine/Model.h"
+#include "Engine/Direct3D.h"
+#include "SkySphere.h"
+class Scenario1 :
     public GameObject
 {
-    int hSkySphere;
+    int hStageMap_;
+    Transform MapTransform_;
 public:
 
-    SkySphere(GameObject* parent);
+    Scenario1(GameObject* parent);
     void Initialize()override;
     void Update()override;
     void Draw()override;

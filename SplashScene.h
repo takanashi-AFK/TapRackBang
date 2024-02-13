@@ -4,11 +4,14 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Text.h"
 #include "ImGuiManager.h"
+#include "Engine/Image.h"
 
 
 //テストシーンを管理するクラス
 class SplashScene : public GameObject
 {
+
+	int hSplash_;
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

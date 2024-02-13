@@ -10,7 +10,7 @@ enum SCENE_ID
 	SCENE_ID_TITLE,
 	SCENE_ID_MENU,
 	SCENE_ID_PLAY,
-
+	SCENE_ID_SCENARIO1,
 };
 
 //-----------------------------------------------------------

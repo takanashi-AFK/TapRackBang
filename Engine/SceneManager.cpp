@@ -5,6 +5,7 @@
 #include "../TitleScene.h"
 #include "../MenuScene.h"
 #include "../PlayScene.h"
+#include "../Scenario1.h"
 
 #include "Model.h"
 #include "Image.h"
@@ -50,8 +51,8 @@ void SceneManager::Update()
 		case SCENE_ID_TITLE: Instantiate<TitleScene>(this); break;
 		case SCENE_ID_MENU: Instantiate<MenuScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
+		case SCENE_ID_SCENARIO1:Instantiate<Scenario1>(this); break;
 		}
-
 		Audio::Initialize();
 		currentSceneID_ = nextSceneID_;
 	}
