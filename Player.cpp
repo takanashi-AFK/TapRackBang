@@ -79,7 +79,6 @@ void Player::PlayerMove()
 	Model::RayCast(hGroundModelHandle_, &groundRayData);
 	if (groundRayData.hit) {
 		transform_.position_.y = -10.f;
-	ImGui::Text("%f", groundRayData.dist);
 	}
 	///////////////////////////////////////////////////
 	ImGui::End();
