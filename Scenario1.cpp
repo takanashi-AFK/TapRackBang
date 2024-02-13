@@ -7,7 +7,7 @@ Scenario1::Scenario1(GameObject* parent)
 void Scenario1::Initialize()
 {
 	Instantiate<SkySphere>(this);
-
+	Instantiate<Player>(this);
 	hStageMap_ = Model::Load("Scenario1Map.fbx");
 	assert(hStageMap_ >= 0);
 }

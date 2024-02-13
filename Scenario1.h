@@ -6,6 +6,7 @@
 #include "Engine/Model.h"
 #include "Engine/Direct3D.h"
 #include "SkySphere.h"
+#include "Player.h"
 class Scenario1 :
     public GameObject
 {

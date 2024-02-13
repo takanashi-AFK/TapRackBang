@@ -150,11 +150,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//全オブジェクトを描画
 				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
 				pRootObject->DrawSub();
+				//エフェクトの描画
+				VFX::Draw();
 
 				Transition::Draw();
 
-				//エフェクトの描画
-				VFX::Draw();
 
 				ImGuiManager::DrawEnd();
 				//描画終了

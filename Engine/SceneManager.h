@@ -37,6 +37,8 @@ public:
 	void ChangeScene(SCENE_ID next, TRANSITION_ID _type);
 	void ChangeScene(SCENE_ID next);
 
+	SCENE_ID GetCurrentScene() { return currentSceneID_; };
+
 private:
 
 	SCENE_ID currentSceneID_;	//åªç›ÇÃÉVÅ[Éì
