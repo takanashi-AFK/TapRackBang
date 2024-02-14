@@ -7,10 +7,10 @@
 #include "Engine/Direct3D.h"
 #include "SkySphere.h"
 #include "Player.h"
+#include "SimpleStage.h"
 class Scenario1 :
     public GameObject
 {
-    int hStageMap_;
     Transform MapTransform_;
 public:
 

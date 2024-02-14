@@ -1,30 +1,31 @@
 #include "SimpleStage.h"
 
-SinpleStage::SinpleStage(GameObject* parent)
+SimpleStage::SimpleStage(GameObject* parent)
+	: GameObject(parent, "SimpleStage")
 {
 }
 
-void SinpleStage::Initialize()
+void SimpleStage::Initialize()
 {
-	hSimpleStage_ = Model::Load("Scenario1Map.fbx");
+	hSimpleStage_ = Model::Load("TestField.fbx");
 	assert(hSimpleStage_ > 0);
 }
 
-void SinpleStage::Update()
+void SimpleStage::Update()
 {
 }
 
-void SinpleStage::Draw()
+void SimpleStage::Draw()
 {
 	Model::SetTransform(hSimpleStage_, transform_);
 	Model::Draw(hSimpleStage_);
 }
 
-void SinpleStage::Release()
+void SimpleStage::Release()
 {
 }
 
-int SinpleStage::GetModelHandle()
+int SimpleStage::GetModelHandle()
 {
 	return hSimpleStage_;
 }

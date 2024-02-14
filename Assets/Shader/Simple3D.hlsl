@@ -105,7 +105,7 @@ float4 PS(VS_OUT inData) : SV_Target
 		float4 R = reflect(lightDir, inData.normal);			//正反射ベクトル
 		speculer = pow(saturate(dot(R, inData.eye)), g_shuniness) * g_vecSpeculer;	//ハイライトを求める
 	}
-
+    return diffuse + diffuse * ambient + speculer;
 	//最終的な色
 	return diffuse * shade + diffuse * ambient + speculer;
 }
