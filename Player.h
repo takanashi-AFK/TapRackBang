@@ -12,9 +12,12 @@ class Player :
 {
 public:
     int hPlayerModel_;
+    float speed;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
+
+    XMFLOAT3 mouseMove_;
     SceneManager* pSM;
     int hGroundModelHandle_;
 

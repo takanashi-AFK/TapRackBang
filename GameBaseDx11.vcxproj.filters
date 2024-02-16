@@ -272,4 +272,7 @@
       <Filter>02Shader</Filter>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="やりたいことリスト.txt" />
+  </ItemGroup>
 </Project>
