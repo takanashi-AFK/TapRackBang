@@ -13,9 +13,12 @@ class Player :
 public:
     int hPlayerModel_;
     float speed;
+    float sensitivity;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
+
+    float playerCameraDistance;
 
     XMFLOAT3 mouseMove_;
     SceneManager* pSM;

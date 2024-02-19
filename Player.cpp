@@ -1,6 +1,7 @@
 #include "Player.h"
 
 const float MODEL_SIZE{ 1 };
+
 Player::Player(GameObject* parent)
 {
 }
@@ -11,11 +12,12 @@ void Player::Initialize()
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
 	transform_.position_.y = 20;	
+	sensitivity = 0.2;
+	playerCameraDistance = 20.f;
 }
 
 void Player::Update()
 {
-	mouseMove_ = Input::GetMouseMove();
 	PlayerMove();
 
 	XMVECTOR nVMoveZ = XMVector3Normalize(vMoveZ_);
@@ -84,30 +86,41 @@ void Player::Update()
 		}
 	}
 
-	////XMMATRIX rotateMatY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-	//XMFLOAT3 distanceBehindPlayer = {0.f,3.f,-5.f}; // プレイヤーモデルの後ろに配置する距離
 
-	//XMVECTOR vPPos = XMLoadFloat3(&transform_.position_);
-	////XMVECTOR vDistance = XMLoadFloat3(&distanceBehindPlayer);
-	////XMVECTOR vNewPos = XMVectorSubtract(vDistance, vPPos);
-	////XMVector3TransformCoord(vNewPos, rotateMatY);
+	  // プレイヤーの頭部の位置を設定
+	// マウスの情報を取得
+	XMFLOAT3 mouseMove = Input::GetMouseMove();
 
-	////XMFLOAT3 rotatedCameraPosition;
-	////XMStoreFloat3(&rotatedCameraPosition, vNewPos);
+	// プレイヤーの頭部の位置を設定
+	XMFLOAT3 playerHead_position = transform_.position_;
+	playerHead_position.y += MODEL_SIZE /2;
 
-	//XMFLOAT3 cameraPosition{};
-	//cameraPosition.x = transform_.position_.x - distanceBehindPlayer.x * XMVectorGetX(nVMoveZ);
-	//cameraPosition.y = transform_.position_.y + distanceBehindPlayer.y;
-	//cameraPosition.z = transform_.position_.z - distanceBehindPlayer.z * XMVectorGetZ(nVMoveZ);
+	// カメラの位置の回転
+	XMFLOAT3 camera_position = Camera::GetPosition();
 
-	//XMFLOAT3 focusPosition{};
-	//focusPosition.x = transform_.position_.x + XMVectorGetX(nVMoveZ);
-	//focusPosition.z = transform_.position_.z + XMVectorGetZ(nVMoveZ);
+		// 正規化済みの向きベクトルを用意
+		XMVECTOR player_To_camPos = XMLoadFloat3(&camera_position) - XMLoadFloat3(&playerHead_position);
+		player_To_camPos = XMVector3Normalize(player_To_camPos);
 
-	//Camera::SetPosition(cameraPosition);
-	//Camera::SetTarget(transform_.position_.x, transform_.position_.y-2, transform_.position_.z + 8);
+		// 回転行列をマウスの移動量を基に作成
+		XMMATRIX matRotate =
+			XMMatrixRotationX(XMConvertToRadians(mouseMove.y * sensitivity)) * XMMatrixRotationY(XMConvertToRadians(mouseMove.x * sensitivity));
 
-	//vPPosとdistanceをつなぐベクトルを作成する
+		// 回転行列を掛けて、向きベクトルを回転
+		player_To_camPos = XMVector3Transform(player_To_camPos, matRotate);
+
+		// 長さを変更
+		player_To_camPos *= playerCameraDistance;
+
+		// 原点０，０から回転後のカメラの位置に伸びるベクトルを作成し、位置に代入
+		XMVECTOR origin_To_camPos = player_To_camPos + XMLoadFloat3(&playerHead_position);
+		XMStoreFloat3(&camera_position, origin_To_camPos);
+
+		if (camera_position.y <= 0)
+			camera_position.y = 0;
+
+	Camera::SetPosition(camera_position);
+	Camera::SetTarget(playerHead_position);
 	
 
 	if (Input::IsKey(DIK_E)) {
@@ -116,7 +129,8 @@ void Player::Update()
 	if (Input::IsKey(DIK_Q)) {
 		transform_.rotate_.y -= 2;
 	}
-	
+	vMoveX_ = XMVector3Cross(XMVectorSet(0, 1, 0, 0), player_To_camPos);
+	vMoveZ_ = player_To_camPos;
 	
 	///////////////////////////////////////////////////
 	
