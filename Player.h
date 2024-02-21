@@ -17,10 +17,12 @@ public:
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
+    XMFLOAT3 mouseMove_;
+    XMVECTOR upLimit;
+    XMVECTOR verticalP;
 
     float playerCameraDistance;
 
-    XMFLOAT3 mouseMove_;
     SceneManager* pSM;
     int hGroundModelHandle_;
 
