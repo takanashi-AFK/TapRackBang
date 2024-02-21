@@ -87,40 +87,41 @@ void Player::Update()
 	}
 
 
-	  // プレイヤーの頭部の位置を設定
-	// マウスの情報を取得
-	XMFLOAT3 mouseMove = Input::GetMouseMove();
+	// カメラの設定
+	{
+		// プレイヤーの頭部の位置を設定
+		XMFLOAT3 playerHead_position = transform_.position_;
+	
 
-	// プレイヤーの頭部の位置を設定
-	XMFLOAT3 playerHead_position = transform_.position_;
-	playerHead_position.y += MODEL_SIZE /2;
+		// マウスの情報を取得
+		XMFLOAT3 mouseMove = Input::GetMouseMove();
 
-	// カメラの位置の回転
-	XMFLOAT3 camera_position = Camera::GetPosition();
+		// カメラの位置の回転
+		XMFLOAT3 camera_position = Camera::GetPosition();
+		{
 
-		// 正規化済みの向きベクトルを用意
-		XMVECTOR player_To_camPos = XMLoadFloat3(&camera_position) - XMLoadFloat3(&playerHead_position);
-		player_To_camPos = XMVector3Normalize(player_To_camPos);
+			// 正規化済みの向きベクトルを用意
+			XMVECTOR player_To_camPos = XMLoadFloat3(&camera_position) - XMLoadFloat3(&playerHead_position);
+			player_To_camPos = XMVector3Normalize(player_To_camPos);
 
-		// 回転行列をマウスの移動量を基に作成
-		XMMATRIX matRotate =
-			XMMatrixRotationX(XMConvertToRadians(mouseMove.y * sensitivity)) * XMMatrixRotationY(XMConvertToRadians(mouseMove.x * sensitivity));
+			// 回転行列をマウスの移動量を基に作成
+			XMMATRIX matRotate =
+				XMMatrixRotationX(XMConvertToRadians(mouseMove.y * sensitivity)) * XMMatrixRotationY(XMConvertToRadians(mouseMove.x * sensitivity));
 
-		// 回転行列を掛けて、向きベクトルを回転
-		player_To_camPos = XMVector3Transform(player_To_camPos, matRotate);
+			// 回転行列を掛けて、向きベクトルを回転
+			player_To_camPos = XMVector3Transform(player_To_camPos, matRotate);
 
-		// 長さを変更
-		player_To_camPos *= playerCameraDistance;
+			// 長さを変更
+			player_To_camPos *= playerCameraDistance;
 
-		// 原点０，０から回転後のカメラの位置に伸びるベクトルを作成し、位置に代入
-		XMVECTOR origin_To_camPos = player_To_camPos + XMLoadFloat3(&playerHead_position);
-		XMStoreFloat3(&camera_position, origin_To_camPos);
+			// 原点０，０から回転後のカメラの位置に伸びるベクトルを作成し、位置に代入
+			XMVECTOR origin_To_camPos = player_To_camPos + XMLoadFloat3(&playerHead_position);
+			XMStoreFloat3(&camera_position, origin_To_camPos);
 
-		if (camera_position.y <= 0)
-			camera_position.y = 0;
-
-	Camera::SetPosition(camera_position);
-	Camera::SetTarget(playerHead_position);
+		}
+		Camera::SetPosition(camera_position);
+		Camera::SetTarget(playerHead_position);
+	}
 	
 
 	if (Input::IsKey(DIK_E)) {
@@ -129,8 +130,7 @@ void Player::Update()
 	if (Input::IsKey(DIK_Q)) {
 		transform_.rotate_.y -= 2;
 	}
-	vMoveX_ = XMVector3Cross(XMVectorSet(0, 1, 0, 0), player_To_camPos);
-	vMoveZ_ = player_To_camPos;
+	
 	
 	///////////////////////////////////////////////////
 	
