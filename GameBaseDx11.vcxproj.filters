@@ -139,6 +139,7 @@
     </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SimpleStage.cpp" />
+    <ClCompile Include="SphereTarget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -254,6 +255,7 @@
     </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="SimpleStage.h" />
+    <ClInclude Include="SphereTarget.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

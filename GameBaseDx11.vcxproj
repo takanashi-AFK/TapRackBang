@@ -161,6 +161,7 @@
     <ClCompile Include="Scenario1.cpp" />
     <ClCompile Include="SimpleStage.cpp" />
     <ClCompile Include="SkySphere.cpp" />
+    <ClCompile Include="SphereTarget.cpp" />
     <ClCompile Include="SplashScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transition.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Scenario1.h" />
     <ClInclude Include="SimpleStage.h" />
     <ClInclude Include="SkySphere.h" />
+    <ClInclude Include="SphereTarget.h" />
     <ClInclude Include="SplashScene.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transition.h" />

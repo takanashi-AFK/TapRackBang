@@ -1,1 +1,2 @@
 当たり判定の配置を軽量化するために、ﾚｲではなくコライダーを用いた判定方式を導入する
+Targetクラスを継承したhumanTargetとsphereCollider

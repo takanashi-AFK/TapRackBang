@@ -8,6 +8,7 @@
 #include "SkySphere.h"
 #include "Player.h"
 #include "SimpleStage.h"
+#include "SphereTarget.h"
 class Scenario1 :
     public GameObject
 {

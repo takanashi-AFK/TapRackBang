@@ -7,6 +7,7 @@ Scenario1::Scenario1(GameObject* parent)
 void Scenario1::Initialize()
 {
 	Instantiate<SkySphere>(this);
+	Instantiate<SphereTarget>(this);
 	Instantiate<SimpleStage>(this);
 	Instantiate<Player>(this);
 }
