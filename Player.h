@@ -27,6 +27,7 @@ public:
     SceneManager* pSM;
     int hGroundModelHandle_;
 
+    Player();
     Player(GameObject* parent);
     void Initialize()override;
     void Update()override;

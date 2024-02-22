@@ -1,6 +1,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet(GameObject* parent)
+	:GameObject(parent, "Gun")
 {
 }
 

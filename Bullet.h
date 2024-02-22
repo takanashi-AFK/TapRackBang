@@ -1,7 +1,7 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/Model.h"
-const float BULLET_SPEED{ 0.3 };
+const float BULLET_SPEED{ 0.3f };
 class Bullet:public GameObject
 {
 public:

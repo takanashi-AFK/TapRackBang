@@ -5,7 +5,12 @@ const float MODEL_SIZE{ 1 };
 //その角度まで開いたら、camposをそのベクトルにしちゃう
 
 
+Player::Player()
+{
+}
+
 Player::Player(GameObject* parent)
+			:GameObject(parent, "Player")
 {
 }
 
@@ -15,7 +20,7 @@ void Player::Initialize()
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
 	transform_.position_.y = 20;	
-	sensitivity = 0.2;
+	sensitivity = 0.2f;
 	playerCameraDistance = 20.f;
 	Instantiate<Gun>(this);
 
@@ -97,6 +102,9 @@ void Player::Update()
 			transform_.position_.z += speed;
 		}
 	}
+
+	
+
 
 	//角度を判定するための上方向に伸びるベクトル
 	
