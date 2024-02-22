@@ -16,6 +16,9 @@ void Bullet::Update()
 	transform_.position_.x += move_.x;
 	transform_.position_.y += move_.y;
 	transform_.position_.z += move_.z;
+
+	if (transform_.position_.z >= 20 || transform_.position_.z <= -20 || transform_.position_.x >= 20 || transform_.position_.x <= -20)
+		KillMe();
 }
 
 void Bullet::Draw()
