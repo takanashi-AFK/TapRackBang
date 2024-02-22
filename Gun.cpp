@@ -8,6 +8,8 @@ Gun::Gun(GameObject* parent):
 
 void Gun::Initialize()
 {
+	hRailGunModel_ = Model::Load("RailGun.fbx");
+	assert(hRailGunModel_ > 0);
 }
 
 void Gun::Update()
@@ -18,11 +20,15 @@ void Gun::Update()
 		Bullet* pBullet = Instantiate<Bullet>(this);
 		pBullet->Shot(transform_.position_, pPlayer->GetForwardVector());
 	}
+
+	
 	SAFE_RELEASE(pPlayer);
 }
 
 void Gun::Draw()
 {
+	Model::SetTransform(hRailGunModel_, transform_);
+	Model::Draw(hRailGunModel_);
 }
 
 void Gun::Release()

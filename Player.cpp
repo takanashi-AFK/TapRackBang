@@ -219,5 +219,5 @@ void Player::PlayerMove()
 
 XMVECTOR Player::GetForwardVector()
 {
-	return vMoveZ_;
+	return ;
 }
