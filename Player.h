@@ -6,6 +6,7 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Camera.h"
 #include "ImGuiManager.h"
+#include "Gun.h"
 
 class Player :
     public GameObject
@@ -33,5 +34,6 @@ public:
     void Release()override;
 
     void PlayerMove();
+    XMVECTOR GetForwardVector();
 };
 

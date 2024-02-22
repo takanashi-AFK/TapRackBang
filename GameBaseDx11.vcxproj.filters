@@ -140,6 +140,8 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SimpleStage.cpp" />
     <ClCompile Include="SphereTarget.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Gun.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -256,6 +258,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SimpleStage.h" />
     <ClInclude Include="SphereTarget.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Gun.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

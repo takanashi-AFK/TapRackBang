@@ -17,6 +17,7 @@ void Player::Initialize()
 	transform_.position_.y = 20;	
 	sensitivity = 0.2;
 	playerCameraDistance = 20.f;
+	Instantiate<Gun>(this);
 
 
 	verticalP = { 0,1,0,0 };
@@ -175,7 +176,7 @@ void Player::Release()
 
 void Player::PlayerMove()
 {
-
+	//‚±‚±‚ÌƒxƒNƒgƒ‹ˆê‚Â‚É‚Ü‚Æ‚ß‚ç‚ê‚é‚ñ‚¾‚Á‚½‚ç‚Ü‚Æ‚ß‚Ä‚µ‚Ü‚¢‚½‚¢
 	vMoveX_ = { speed,0.0f,0.0f,0.0f };
 	vMoveZ_ = { 0.0f,0.0f,speed,0.0f };
 
@@ -206,4 +207,9 @@ void Player::PlayerMove()
 	}
 	XMVector3Normalize(vPlayerPos_);
 	XMStoreFloat3(&transform_.position_, vPlayerPos_);
+}
+
+XMVECTOR Player::GetForwardVector()
+{
+	return vMoveZ_;
 }
