@@ -24,20 +24,15 @@ void Player::Initialize()
 	playerCameraDistance = 20.f;
 	Instantiate<Gun>(this);
 
-
 	verticalP = { 0,1,0,0 };
 	XMMATRIX upRotateY = XMMatrixRotationY(30);
 	upLimit = XMVector3Transform(verticalP, upRotateY);
 	XMVECTOR downLimit = {};
-
-
 }
 
 void Player::Update()
 {
 	PlayerMove();
-
-	XMVECTOR nVMoveZ = XMVector3Normalize(vMoveZ_);
 
 	//ステージのオブジェクトを探す 
 	//カメラ移動
@@ -102,72 +97,62 @@ void Player::Update()
 			transform_.position_.z += speed;
 		}
 	}
-
 	
 
+	mouseMove_ = Input::GetMouseMove();
+	XMFLOAT3 cameraPosition = Camera::GetPosition();
 
-	//角度を判定するための上方向に伸びるベクトル
+	//カメラからプレイヤーへ向けたベクトルを作成、単位ベクトル化
+	playerForward = XMLoadFloat3(&transform_.position_) - XMLoadFloat3(&cameraPosition);
+	playerForward = XMVector3Normalize(playerForward);
+
+	//各方向の移動量(何度動くか)
+	auto rotX = XMConvertToRadians(mouseMove_.x * sensitivity);
+	auto rotY = XMConvertToRadians(mouseMove_.y * sensitivity);
+
+	//マウスの移動量から回転行列を作成
+	XMMATRIX matRotate = XMMatrixRotationX(rotY) * XMMatrixRotationY(rotX);
 	
 
-	XMFLOAT3 mouseMove = Input::GetMouseMove();
+	XMMATRIX matTranslateToPlayer = XMMatrixTranslation(transform_.position_.x, transform_.position_.y, transform_.position_.z);
+	XMMATRIX matTranslateBack = XMMatrixTranslation(-transform_.position_.x, -transform_.position_.y, -transform_.position_.z);
+	XMMATRIX matCombined = matTranslateToPlayer * matRotate * matTranslateBack;
 
-	XMFLOAT3 playerHead_position = transform_.position_;
+	// カメラの位置を中心にして回転行列を適用し、その結果をプレイヤーの位置に平行移動させる
+	XMVECTOR cameraPositionTranslated = XMVector3Transform(XMLoadFloat3(&cameraPosition) - XMLoadFloat3(&transform_.position_), matCombined) + XMLoadFloat3(&transform_.position_);
+	XMStoreFloat3(&cameraPosition, cameraPositionTranslated);
 
-	XMFLOAT3 camera_position = Camera::GetPosition();
+	//上で作成した回転行列を用いて、カメラからプレイヤーへのベクトルを回転
+	playerForward = XMVector3Transform(-playerForward, matRotate);
 
+	//カメラをプレイヤーの後ろにするため、距離分を掛けてベクトルを伸ばす
+	playerForward *= playerCameraDistance;
 
-		XMVECTOR player_To_camPos = XMLoadFloat3(&camera_position) - XMLoadFloat3(&playerHead_position);
-		player_To_camPos = XMVector3Normalize(player_To_camPos);
-
-		auto rotY = XMConvertToRadians(mouseMove.y * sensitivity);
-		auto rotX = XMConvertToRadians(mouseMove.x * sensitivity);
-
-		// 回転行列をマウスの移動量を基に作成
-		XMMATRIX matRotate =
-			XMMatrixRotationX(rotY) * XMMatrixRotationY(rotX);
-
-			// 回転行列を掛けて、向きベクトルを回転
-			player_To_camPos = XMVector3Transform(player_To_camPos, matRotate);
-
-			// 長さを変更
-			player_To_camPos *= playerCameraDistance;
-
-			// 原点０，０から回転後のカメラの位置に伸びるベクトルを作成し、位置に代入
-			XMVECTOR origin_To_camPos = player_To_camPos + XMLoadFloat3(&playerHead_position);
-			XMStoreFloat3(&camera_position, origin_To_camPos);
+	//カメラの位置を指定するため、原点からカメラの位置へのベクトルを作成
+	XMVECTOR originToCamPos = playerForward + XMLoadFloat3(&transform_.position_);
+	XMStoreFloat3(&cameraPosition, originToCamPos);
 
 
-		float dotProduct = XMVectorGetX(XMVector3Dot(XMVector3Normalize(player_To_camPos), XMVector3Normalize(verticalP)));
+	//if (mouseMove_.x < 0) {
+	//	//左方向にカメラを向ける()
+	//}
+	//else if (mouseMove_.y >= 0) {
+	//	//右方向にカメラを向ける
+	//}
 
-		// 角度を度に変換
-		float angle = acos(dotProduct);
-		if (angle >= XMConvertToRadians(90))
-		{
-			camera_position.y = 0;//fix to rotation
-		}
+	XMFLOAT3 cameraTarget = transform_.position_;
+	cameraTarget.x = transform_.position_.x + 3;
+	cameraTarget.x = transform_.position_.x + 3;
 
-		sensitivity = .2f;
-		if (angle < XMConvertToRadians(30))
-		{
-			XMStoreFloat3(&camera_position, upLimit);
-		}
-	Camera::SetPosition(camera_position);
-	Camera::SetTarget(playerHead_position);
-	
-	// プレイヤーが進む方向ベクトルを計算
-	XMVECTOR player_forward = player_To_camPos;
+	Camera::SetPosition(cameraPosition);
+	Camera::SetTarget(cameraTarget);
 
-	// プレイヤーの向きを設定
-	transform_.rotate_.y = atan2(XMVectorGetX(-player_forward), XMVectorGetZ(-player_forward)) * (180.0f / XM_PI);
-	
 	///////////////////////////////////////////////////
 	
 	ImGui::Begin("Debug");
-	ImGui::Text("x=%f", transform_.position_.x);
-	ImGui::Text("y=%f", transform_.position_.x);
+	ImGui::Text("x=%f", mouseMove_.x);
+	ImGui::Text("y=%f", mouseMove_.y);
 	ImGui::Text("z=%f", transform_.position_.z);
-	ImGui::Text("angle = %f", angle);
-	ImGui::Text("rotY = %f", rotY);
 	
 	ImGui::End();
 }
@@ -219,5 +204,5 @@ void Player::PlayerMove()
 
 XMVECTOR Player::GetForwardVector()
 {
-	return vMoveZ_+vMoveX_;
+	return playerForward;
 }

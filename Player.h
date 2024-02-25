@@ -22,6 +22,8 @@ public:
     XMVECTOR upLimit;
     XMVECTOR verticalP;
 
+    XMVECTOR playerForward;
+
     float playerCameraDistance;
 
     SceneManager* pSM;

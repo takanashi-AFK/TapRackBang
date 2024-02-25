@@ -34,5 +34,5 @@ void Bullet::Release()
 void Bullet::Shot(XMFLOAT3 _playerPos, XMVECTOR direction)
 {
 	transform_.position_ = _playerPos;
-	XMStoreFloat3(&move_, XMVector3Normalize(direction) * BULLET_SPEED);
+	XMStoreFloat3(&move_, XMVector3Normalize(-direction) * BULLET_SPEED);
 }
