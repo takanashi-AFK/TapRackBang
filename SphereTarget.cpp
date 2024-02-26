@@ -8,12 +8,6 @@ void SphereTarget::Initialize()
 {
 	hSphereModel_ = Model::Load("DebugCollision/SphereCollider.fbx");
 	assert(hSphereModel_ > 0);
-
-	for (int i = 0; i < PLACE_SIZE; i++) {
-		for (int j = 0; j < PLACE_SIZE; j++) {
-			targetPlace_[i][j] = XMFLOAT3(i * PLACE_OUTSET, j * PLACE_OUTSET, 0);
-		}
-	}
 }
 
 void SphereTarget::Update()
@@ -27,8 +21,13 @@ void SphereTarget::Update()
 
 void SphereTarget::Draw()
 {
-	Model::SetTransform(hSphereModel_, transform_);
-	Model::Draw(hSphereModel_);
+	for (int y = 1; y <= PLACE_SIZE; y++)
+		for (int x = 1; x <= PLACE_SIZE; x++){
+			transform_.position_.x = PLACE_OUTSET * x;
+			transform_.position_.y = PLACE_OUTSET * y;
+			Model::SetTransform(hSphereModel_, transform_);
+			Model::Draw(hSphereModel_);
+		}
 }
 
 void SphereTarget::Release()

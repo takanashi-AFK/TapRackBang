@@ -141,9 +141,6 @@ void Player::Update()
 	//}
 
 	XMFLOAT3 cameraTarget = transform_.position_;
-	cameraTarget.x = transform_.position_.x + 3;
-	cameraTarget.x = transform_.position_.x + 3;
-
 	Camera::SetPosition(cameraPosition);
 	Camera::SetTarget(cameraTarget);
 

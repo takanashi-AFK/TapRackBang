@@ -3,7 +3,7 @@
 #include "Engine/Model.h"
 
 const int PLACE_SIZE{4};
-const float PLACE_OUTSET{ 3 };
+const float PLACE_OUTSET{ 2 };
 
 class SphereTarget:public GameObject
 {
