@@ -22,7 +22,7 @@ void Player::Initialize()
 	transform_.position_.y = 20;	
 	sensitivity = 0.2f;
 	playerCameraDistance = 20.f;
-	//Instantiate<Gun>(this);
+	Instantiate<Gun>(this);
 
 	verticalP = { 0,1,0,0 };
 	XMMATRIX upRotateY = XMMatrixRotationY(30);

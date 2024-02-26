@@ -1,6 +1,9 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/Model.h"
+#include "Engine/SphereCollider.h"
+
+
 const float BULLET_SPEED{ 0.3f };
 class Bullet:public GameObject
 {

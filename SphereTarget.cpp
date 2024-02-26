@@ -14,21 +14,44 @@ void SphereTarget::Initialize()
 			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x, PLACE_OUTSET * y, 0);
 		}
 
+	//‚±‚ê‚Í•s“®
+		xPos = rand() % PLACE_SIZE;
+		yPos = rand() % PLACE_SIZE;
 
-	for (int i = 0; i < 3; i++) {
+		t[0].targetTrans.position_ = targetPlace_[xPos][yPos];
+		SphereCollider* collision = new SphereCollider(t[0].targetTrans.position_, 1.2f);
+		AddCollider(collision);
+
+	//‚à‚µ1‚Æd‚È‚Á‚Ä‚½‚ç
 		do {
-			xPos = rand() % PLACE_SIZE;
-			yPos = rand() % PLACE_SIZE;
-		} while (t[i].targetTrans.position_.x == targetPlace_[xPos][yPos].x &&
-			t[i].targetTrans.position_.y == targetPlace_[xPos][yPos].y);
+		xPos = rand() % PLACE_SIZE;
+		yPos = rand() % PLACE_SIZE;
+		} while (t[0].targetTrans.position_.x == targetPlace_[xPos][yPos].x&&
+				 t[0].targetTrans.position_.y == targetPlace_[xPos][yPos].y);
+
+		t[1].targetTrans.position_ = targetPlace_[xPos][yPos];
+		SphereCollider* collision = new SphereCollider(t[1].targetTrans.position_, 1.2f);
+		AddCollider(collision);
+
+
+	//‚à‚µ‚P‚ÆA‚Q‚Æd‚È‚Á‚Ä‚½‚ç
+		do {
+		xPos = rand() % PLACE_SIZE;
+		yPos = rand() % PLACE_SIZE;
+		} while (t[0].targetTrans.position_.x == targetPlace_[xPos][yPos].x &&
+			t[0].targetTrans.position_.y == targetPlace_[xPos][yPos].y ||
+			t[1].targetTrans.position_.x == targetPlace_[xPos][yPos].x &&
+			t[1].targetTrans.position_.y == targetPlace_[xPos][yPos].y);
 		
-		t[i].targetTrans.position_ = targetPlace_[xPos][yPos];
-	}
+		t[2].targetTrans.position_ = targetPlace_[xPos][yPos];
+
+		SphereCollider* collision = new SphereCollider(t[2].targetTrans.position_, 1.2f);
+		AddCollider(collision);
 }
 
 void SphereTarget::Update()
 {
-
+	
 }
 
 void SphereTarget::Draw()
@@ -44,5 +67,14 @@ void SphereTarget::Draw()
 
 void SphereTarget::Release()
 {
+}
+
+void SphereTarget::OnCollision(GameObject* pTarget)
+{
+	//’e‚É“–‚½‚Á‚½‚Æ‚«
+	if (pTarget->GetObjectName() == "Bullet")
+	{
+		KillMe();
+	}
 }
 

@@ -17,6 +17,9 @@ void Bullet::Update()
 	transform_.position_.y += move_.y;
 	transform_.position_.z += move_.z;
 
+	SphereCollider* collision = new SphereCollider(transform_.position_, 1.2f);
+	AddCollider(collision);
+
 	if (transform_.position_.z >= 20 || transform_.position_.z <= -20 || transform_.position_.x >= 20 || transform_.position_.x <= -20)
 		KillMe();
 }
