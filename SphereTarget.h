@@ -10,9 +10,16 @@ class SphereTarget:public GameObject
 private:
     int hSphereModel_;
     XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
+    int xPos, yPos;
+
+
 public:
 	SphereTarget(GameObject* parent);
-
+    struct targetData {
+        Transform targetTrans;
+        bool isHit;
+    };
+    targetData t[PLACE_SIZE * PLACE_SIZE];
     void Initialize()override;
     void Update()override;
     void Draw()override;

@@ -8,28 +8,41 @@ void SphereTarget::Initialize()
 {
 	hSphereModel_ = Model::Load("DebugCollision/SphereCollider.fbx");
 	assert(hSphereModel_ > 0);
+
+	for (int y = 0; y < PLACE_SIZE; y++)
+		for (int x = 0; x < PLACE_SIZE; x++) {
+			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x, PLACE_OUTSET * y, 0);
+		}
+
+
+	for (int i = 0; i < 3; i++) {
+		do {
+			xPos = rand() % PLACE_SIZE;
+			yPos = rand() % PLACE_SIZE;
+		} while (t[i].targetTrans.position_.x == targetPlace_[xPos][yPos].x &&
+			t[i].targetTrans.position_.y == targetPlace_[xPos][yPos].y);
+		
+		t[i].targetTrans.position_ = targetPlace_[xPos][yPos];
+	}
 }
 
 void SphereTarget::Update()
 {
-	//if (/*‚à‚µ‰ó‚³‚ê‚½‚ç*/true) {
-	//	if (/*“ñŽŸŒ³”z—ñ‚Ì“¯‚¶ˆÊ’u‚¶‚á‚È‚©‚Á‚½‚ç*/true) {
-	//		SetPosition(targetPlace_[rand() % PLACE_SIZE][rand() % PLACE_SIZE]);
-	//	}
-	//}
+
 }
 
 void SphereTarget::Draw()
 {
-	for (int y = 1; y <= PLACE_SIZE; y++)
-		for (int x = 1; x <= PLACE_SIZE; x++){
-			transform_.position_.x = PLACE_OUTSET * x;
-			transform_.position_.y = PLACE_OUTSET * y;
-			Model::SetTransform(hSphereModel_, transform_);
-			Model::Draw(hSphereModel_);
-		}
+	
+	for(int i = 0; i < PLACE_SIZE-1;i++){
+
+		Model::SetTransform(hSphereModel_, t[i].targetTrans);
+		Model::Draw(hSphereModel_);
+	}
+
 }
 
 void SphereTarget::Release()
 {
 }
+
