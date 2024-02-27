@@ -52,9 +52,9 @@ void SphereTarget::Initialize()
 	AddCollider(collision);
 }
 
+
 void SphereTarget::Update()
 {
-	
 }
 
 void SphereTarget::Draw()
@@ -69,9 +69,15 @@ void SphereTarget::Release()
 
 void SphereTarget::OnCollision(GameObject* pTarget)
 {
+	
 	//弾に当たったとき
 	if (pTarget->GetObjectName() == "Bullet"){
+		Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
 		KillMe();
+		sc1->NotifyBreakTarget();
 		pTarget->KillMe();
 	}
 }
+
+//スフィアターゲットクラスで弾が当たったよってなったら、オブザーバーパターン
+//のメソッドでScenaario1に対して通知を行い、再生成

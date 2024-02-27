@@ -2,6 +2,7 @@
 
 Scenario1::Scenario1(GameObject* parent)
 {
+	isTargetBroken = false;
 }
 
 void Scenario1::Initialize()
@@ -58,6 +59,26 @@ void Scenario1::Update()
 		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
+
+	if (isTargetBroken == true) {
+		//Ç‡ÇµÇPÇ∆ÅAÇQÇ∆èdÇ»Ç¡ÇƒÇΩÇÁ
+		do {
+			xPos = rand() % PLACE_SIZE;
+			yPos = rand() % PLACE_SIZE;
+		} while (previousPos[0].x == targetPlace_[xPos][yPos].x &&
+			previousPos[0].y == targetPlace_[xPos][yPos].y ||
+			previousPos[1].x == targetPlace_[xPos][yPos].x &&
+			previousPos[1].y == targetPlace_[xPos][yPos].y||
+			previousPos[2].x == targetPlace_[xPos][yPos].x &&
+			previousPos[2].y == targetPlace_[xPos][yPos].y );
+
+		sp3 = Instantiate<SphereTarget>(this);
+		sp3->SetPosition(targetPlace_[xPos][yPos]);
+		previousPos[2] = targetPlace_[xPos][yPos];
+
+		isTargetBroken = false;
+	}
+	
 }
 
 void Scenario1::Draw()
@@ -67,4 +88,9 @@ void Scenario1::Draw()
 
 void Scenario1::Release()
 {
+}
+
+void Scenario1::NotifyBreakTarget()
+{
+	isTargetBroken = true;
 }

@@ -125,6 +125,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActionListener.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BillBoard.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionListener.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BillBoard.h" />
