@@ -10,9 +10,6 @@ void Gun::Initialize()
 {
 	hRailGunModel_ = Model::Load("RailGun.fbx");
 	assert(hRailGunModel_ > 0);
-	transform_.position_.y + 2;
-	transform_.position_.x + 2;
-
 }
 
 void Gun::Update()

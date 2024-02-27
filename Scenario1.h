@@ -13,6 +13,12 @@ class Scenario1 :
     public GameObject
 {
     Transform MapTransform_;
+    XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
+    XMFLOAT3 previousPos[3];
+    SphereTarget* sp1;
+    SphereTarget* sp2;
+    SphereTarget* sp3;
+    int xPos, yPos;
 public:
 
     Scenario1(GameObject* parent);
