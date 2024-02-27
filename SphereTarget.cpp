@@ -54,7 +54,6 @@ void SphereTarget::Initialize()
 
 void SphereTarget::Update()
 {
-	
 }
 
 void SphereTarget::Draw()
@@ -69,9 +68,12 @@ void SphereTarget::Release()
 
 void SphereTarget::OnCollision(GameObject* pTarget)
 {
+	
 	//’e‚É“–‚½‚Á‚½‚Æ‚«
 	if (pTarget->GetObjectName() == "Bullet"){
+		Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
 		KillMe();
+		sc1->NotifyBreakTarget();
 		pTarget->KillMe();
 	}
 }
