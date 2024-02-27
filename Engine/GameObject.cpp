@@ -12,15 +12,13 @@ GameObject::GameObject(void) :
 //コンストラクタ（名前なし）
 GameObject::GameObject(GameObject * parent) :
 	GameObject(parent, "")
+
 {
 }
 
 //コンストラクタ（標準）
 GameObject::GameObject(GameObject * parent, const std::string& name)
 	: pParent_(parent),
-
-
-
 	objectName_(name)
 {
 	childList_.clear();

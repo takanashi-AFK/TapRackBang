@@ -6,7 +6,7 @@
 #include "Player.h"
 
 const float BULLET_SPEED{ 0.3f };
-class Bullet:public GameObject
+class Bullet :public GameObject
 {
 public:
 	Bullet(GameObject* parent);
@@ -20,6 +20,5 @@ private:
 	int hBulletModel;
 	XMFLOAT3 move_;
 	SphereCollider* collision;
-
 };
 

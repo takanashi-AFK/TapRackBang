@@ -1,14 +1,14 @@
 #include "Bullet.h"
 
 Bullet::Bullet(GameObject* parent)
-	:GameObject(parent, "Gun")
+	:GameObject(parent, "Bullet")
 {
 }
 
 void Bullet::Initialize()
 {
 	hBulletModel = Model::Load("DebugCollision/SphereCollider.fbx");
-	collision = new SphereCollider(XMFLOAT3(0,0,0), 1.2f);
+	collision = new SphereCollider(transform_.position_, 1.2f);
 	AddCollider(collision);
 }
 
@@ -38,3 +38,5 @@ void Bullet::Shot(XMFLOAT3 _playerPos, XMVECTOR direction)
 	XMVECTOR shotVec = direction;
 	XMStoreFloat3(&move_, XMVector3Normalize(-shotVec) * BULLET_SPEED);
 }
+
+

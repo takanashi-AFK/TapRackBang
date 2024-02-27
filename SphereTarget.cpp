@@ -72,5 +72,6 @@ void SphereTarget::OnCollision(GameObject* pTarget)
 	//’e‚É“–‚½‚Á‚½‚Æ‚«
 	if (pTarget->GetObjectName() == "Bullet"){
 		KillMe();
+		pTarget->KillMe();
 	}
 }
