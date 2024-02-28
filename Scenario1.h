@@ -9,13 +9,14 @@
 #include "SkySphere.h"
 #include "Player.h"
 #include "SimpleStage.h"
-#include "SphereTarget.h" 
+#include "SphereTarget.h"
+#include   "ActionListener.h"
 class SphereTarget;
 
 const int PLACE_SIZE{ 4 };
 const float PLACE_OUTSET{ 2 };
 
-class Scenario1 : public GameObject {
+class Scenario1 : public GameObject,public ActionListener {
     Transform MapTransform_;
     XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
     XMFLOAT3 previousPos[3];
@@ -31,5 +32,5 @@ public:
     void Update() override;
     void Draw() override;
     void Release() override;
-    void NotifyBreakTarget();
+    void onAction() override;
 };

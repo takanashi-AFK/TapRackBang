@@ -68,12 +68,18 @@ void SphereTarget::Release()
 
 void SphereTarget::OnCollision(GameObject* pTarget)
 {
-	
+	Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
 	//’e‚É“–‚½‚Á‚½‚Æ‚«
 	if (pTarget->GetObjectName() == "Bullet"){
-		Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
+	
 		KillMe();
-		sc1->NotifyBreakTarget();
 		pTarget->KillMe();
+		NotifyTargetDestroy(sc1);
 	}
 }
+
+void SphereTarget::NotifyTargetDestroy(Scenario1* sc)
+{
+	sc->onAction();
+}
+

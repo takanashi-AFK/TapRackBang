@@ -4,7 +4,9 @@
 #include "Engine/SphereCollider.h"
 #include "Bullet.h"
 #include "Scenario1.h"
+#include "ActionListener.h"
 
+class Scenario1;
 class SphereTarget:public GameObject
 {
 private:
@@ -21,5 +23,7 @@ public:
     void Draw()override;
     void Release()override;
     void OnCollision(GameObject* pTarget) override;
+
+    void NotifyTargetDestroy(Scenario1* sc);
 };
 

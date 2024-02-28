@@ -1,6 +1,7 @@
 #include "Scenario1.h"
 
 Scenario1::Scenario1(GameObject* parent)
+	:GameObject(parent,"Scenario1")
 {
 	isTargetBroken = false;
 }
@@ -90,7 +91,7 @@ void Scenario1::Release()
 {
 }
 
-void Scenario1::NotifyBreakTarget()
+void Scenario1::onAction()
 {
 	isTargetBroken = true;
 }
