@@ -8,8 +8,9 @@ Bullet::Bullet(GameObject* parent)
 void Bullet::Initialize()
 {
 	hBulletModel = Model::Load("DebugCollision/SphereCollider.fbx");
-	collision = new SphereCollider(transform_.position_, 1.2f);
+	collision = new SphereCollider(transform_.position_, 0.3f);
 	AddCollider(collision);
+	transform_.scale_ = { .3f,.3f,.3f };
 }
 
 void Bullet::Update()

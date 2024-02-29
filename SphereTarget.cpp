@@ -48,7 +48,7 @@ void SphereTarget::Initialize()
 		//	SphereCollider* collision = new SphereCollider(t[2].targetTrans.position_, 1.2f);
 		//	AddCollider(collision);
 	}
-	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 1.2f);
+	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 1.f);
 	AddCollider(collision);
 }
 
@@ -80,6 +80,12 @@ void SphereTarget::OnCollision(GameObject* pTarget)
 
 void SphereTarget::NotifyTargetDestroy(Scenario1* sc)
 {
-	sc->onAction();
+	pos = transform_.position_;
+	sc->onAction(pos);
+}
+
+XMFLOAT3 SphereTarget::ReturnBreakPos()
+{
+	return transform_.position_;
 }
 
