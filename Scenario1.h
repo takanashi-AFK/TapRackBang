@@ -15,7 +15,7 @@
 class SphereTarget;
 
 const int PLACE_SIZE{ 4 };
-const float PLACE_OUTSET{ 2.5f };
+const float PLACE_OUTSET{ 2.25f };
 
 class Scenario1 : public GameObject,public ActionListener {
     Transform MapTransform_;
