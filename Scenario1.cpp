@@ -13,7 +13,7 @@ void Scenario1::Initialize()
 	{
 	for (int y = 0; y < PLACE_SIZE; y++)
 		for (int x = 0; x < PLACE_SIZE; x++) {
-			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x, PLACE_OUTSET * y, 0);
+			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x - 4, PLACE_OUTSET * y -15, 3);
 		}
 	
 		sp[0] = Instantiate<SphereTarget>(this);
