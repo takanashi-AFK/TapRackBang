@@ -18,7 +18,7 @@ void Gun::Update()
 
 	if (Input::IsKeyDown(DIK_SPACE)) {
 		Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
-		pBullet->Shot(pPlayer->GetPosition(), pPlayer->GetForwardVector());
+		pBullet->Shot(pPlayer->GetPosition(), Camera::GetSightLine());
 	}
 
 	

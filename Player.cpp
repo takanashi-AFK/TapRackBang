@@ -21,13 +21,7 @@ void Player::Initialize()
 	pSM=(SceneManager*)FindObject("SceneManager");
 	transform_.position_.y = 20;	
 	sensitivity = 0.2f;
-	playerCameraDistance = 20.f;
 	Instantiate<Gun>(this);
-
-	verticalP = { 0,1,0,0 };
-	XMMATRIX upRotateY = XMMatrixRotationY(30);
-	upLimit = XMVector3Transform(verticalP, upRotateY);
-	XMVECTOR downLimit = {};
 }
 
 void Player::Update()
@@ -98,60 +92,122 @@ void Player::Update()
 		}
 	}
 	
+	/*試行錯誤跡*/{
+		/*
+		mouseMove_ = Input::GetMouseMove();
+		XMFLOAT3 cameraPosition = Camera::GetPosition();
+		
+		//カメラからプレイヤーへ向けたベクトルを作成、単位ベクトル化
+		playerForward = XMLoadFloat3(&transform_.position_) - XMLoadFloat3(&cameraPosition);
+		playerForward = XMVector3Normalize(playerForward);
+		
+		//各方向の移動量(何度動くか)
+		auto rotX = XMConvertToRadians(mouseMove_.x * sensitivity);
+		auto rotY = XMConvertToRadians(mouseMove_.y * sensitivity);
+		
+		//マウスの移動量から回転行列を作成
+		XMMATRIX matRotate = XMMatrixRotationX(rotY) * XMMatrixRotationY(rotX);
+		
+		
+		XMMATRIX matTranslateToPlayer = XMMatrixTranslation(transform_.position_.x, transform_.position_.y, transform_.position_.z);
+		XMMATRIX matTranslateBack = XMMatrixTranslation(-transform_.position_.x, -transform_.position_.y, -transform_.position_.z);
+		XMMATRIX matCombined = matTranslateToPlayer * matRotate * matTranslateBack;
+		
+		// カメラの位置を中心にして回転行列を適用し、その結果をプレイヤーの位置に平行移動させる
+		XMVECTOR cameraPositionTranslated = XMVector3Transform(XMLoadFloat3(&cameraPosition) - XMLoadFloat3(&transform_.position_), matCombined) + XMLoadFloat3(&transform_.position_);
+		XMStoreFloat3(&cameraPosition, cameraPositionTranslated);
+		
+		//上で作成した回転行列を用いて、カメラからプレイヤーへのベクトルを回転
+		playerForward = XMVector3Transform(-playerForward, matRotate);
+		
+		//カメラをプレイヤーの後ろにするため、距離分を掛けてベクトルを伸ばす
+		playerForward *= playerCameraDistance;
+		
+		//カメラの位置を指定するため、原点からカメラの位置へのベクトルを作成
+		XMVECTOR originToCamPos = playerForward + XMLoadFloat3(&transform_.position_);
+		XMStoreFloat3(&cameraPosition, originToCamPos);
+		
+		
+		//if (mouseMove_.x < 0) {
+		//	//左方向にカメラを向ける()
+		//}
+		//else if (mouseMove_.y >= 0) {
+		//	//右方向にカメラを向ける
+		//}
+		
+		XMFLOAT3 cameraTarget = transform_.position_;
+		Camera::SetPosition(cameraPosition);
+		Camera::SetTarget(cameraTarget);
+		*/
+		
+			}
+	;
+	static XMFLOAT2 rotateAngle{};
+	//マウスの移動量を角度として蓄積する
+	rotateAngle.x += Input::GetMouseMove().x;
+	rotateAngle.y += Input::GetMouseMove().y;
+	//ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
+	XMFLOAT3 camTarget{};
+	XMFLOAT3 camPosition{};
 
-	mouseMove_ = Input::GetMouseMove();
-	XMFLOAT3 cameraPosition = Camera::GetPosition();
+	/*y軸回転*/ {
+		const float distance{ 10.f };
+		//実際には仮のベクトルで、playerToCamTargetではない、いい変数名を探そう
+		XMVECTOR playerToCamTarget{ 0.f,0.f,1.f,0.f };
+		//Y軸で回る回転行列を作成、playerToCamTargetを回転させる
+		XMMATRIX rotY = XMMatrixRotationY(XMConvertToRadians(rotateAngle.x) * sensitivity);
+		playerToCamTarget = XMVector3Transform(playerToCamTarget, rotY);
+		playerToCamTarget *= distance;
 
-	//カメラからプレイヤーへ向けたベクトルを作成、単位ベクトル化
-	playerForward = XMLoadFloat3(&transform_.position_) - XMLoadFloat3(&cameraPosition);
-	playerForward = XMVector3Normalize(playerForward);
+		//原点からplayerPosに向かうベクトル
+		XMVECTOR originToPlayer = XMLoadFloat3(&transform_.position_);
+		//原点からCamTargetに向かうベクトル
+		XMVECTOR originToCamTarget = playerToCamTarget + originToPlayer;
 
-	//各方向の移動量(何度動くか)
-	auto rotX = XMConvertToRadians(mouseMove_.x * sensitivity);
-	auto rotY = XMConvertToRadians(mouseMove_.y * sensitivity);
 
-	//マウスの移動量から回転行列を作成
-	XMMATRIX matRotate = XMMatrixRotationX(rotY) * XMMatrixRotationY(rotX);
+		//プレイヤーからターゲットに向かう方向ベクトルの逆ベクトルをとり、
+		//プレイヤーからポジションへのベクトルを生成、回転
+		XMVECTOR playerToCamPosition = -playerToCamTarget;
+		playerToCamPosition = XMVector3Transform(playerToCamPosition, XMMatrixRotationY(XMConvertToRadians(-30)));
+
+		XMVECTOR originToCamPosition = originToPlayer + playerToCamPosition;
+
+		//カメラのターゲットを作成
+		XMStoreFloat3(&camTarget, originToCamTarget);
+		XMStoreFloat3(&camPosition, originToCamPosition);
+		
+		ImGui::Text("Tx = %f,Ty = %f,Tz = %f", camTarget.x, camTarget.y, camTarget.z);
+		ImGui::Text("Px = %f,Py = %f,Pz = %f", camPosition.x, camPosition.y, camPosition.z);
+	}
+	/*x軸回転*/ {
+		
+		XMFLOAT3 newCenter{};
+		XMVECTOR originToCamPosition{};
+		XMVECTOR originToCamTarget{};
+		XMVECTOR originToNewCenter{};
+		XMVECTOR newCenterToCamTarget{};
+		XMVECTOR newCenterToCamPosition{};
+		XMStoreFloat3(&newCenter,  XMLoadFloat3(&camTarget)+ XMLoadFloat3(&camPosition) * 0.5);
+
+		originToNewCenter = XMLoadFloat3(&newCenter);
+		newCenterToCamTarget = XMLoadFloat3(&camTarget) - originToNewCenter;
+
+		XMMATRIX rotX = XMMatrixRotationX(XMConvertToRadians(rotateAngle.y) * sensitivity);
+		newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotX);
+
+		ImGui::Text("x = %f, y = %f", rotateAngle.x, rotateAngle.y);
+
+		originToCamTarget = originToNewCenter + newCenterToCamTarget;
+		newCenterToCamPosition = -newCenterToCamTarget;
+		originToCamPosition = originToNewCenter + newCenterToCamPosition;
+
+		//カメラのターゲットを作成
+		XMStoreFloat3(&camTarget, originToCamTarget);
+		XMStoreFloat3(&camPosition, originToCamPosition);
 	
-
-	XMMATRIX matTranslateToPlayer = XMMatrixTranslation(transform_.position_.x, transform_.position_.y, transform_.position_.z);
-	XMMATRIX matTranslateBack = XMMatrixTranslation(-transform_.position_.x, -transform_.position_.y, -transform_.position_.z);
-	XMMATRIX matCombined = matTranslateToPlayer * matRotate * matTranslateBack;
-
-	// カメラの位置を中心にして回転行列を適用し、その結果をプレイヤーの位置に平行移動させる
-	XMVECTOR cameraPositionTranslated = XMVector3Transform(XMLoadFloat3(&cameraPosition) - XMLoadFloat3(&transform_.position_), matCombined) + XMLoadFloat3(&transform_.position_);
-	XMStoreFloat3(&cameraPosition, cameraPositionTranslated);
-
-	//上で作成した回転行列を用いて、カメラからプレイヤーへのベクトルを回転
-	playerForward = XMVector3Transform(-playerForward, matRotate);
-
-	//カメラをプレイヤーの後ろにするため、距離分を掛けてベクトルを伸ばす
-	playerForward *= playerCameraDistance;
-
-	//カメラの位置を指定するため、原点からカメラの位置へのベクトルを作成
-	XMVECTOR originToCamPos = playerForward + XMLoadFloat3(&transform_.position_);
-	XMStoreFloat3(&cameraPosition, originToCamPos);
-
-
-	//if (mouseMove_.x < 0) {
-	//	//左方向にカメラを向ける()
-	//}
-	//else if (mouseMove_.y >= 0) {
-	//	//右方向にカメラを向ける
-	//}
-
-	XMFLOAT3 cameraTarget = transform_.position_;
-	Camera::SetPosition(cameraPosition);
-	Camera::SetTarget(cameraTarget);
-
-	///////////////////////////////////////////////////
-	
-	ImGui::Begin("Debug");
-	ImGui::Text("x=%f", mouseMove_.x);
-	ImGui::Text("y=%f", mouseMove_.y);
-	ImGui::Text("z=%f", transform_.position_.z);
-	
-	ImGui::End();
+	}
+	Camera::SetTarget(camTarget);
+	Camera::SetPosition(camPosition);
 }
 
 void Player::Draw()

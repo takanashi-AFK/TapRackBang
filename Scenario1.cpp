@@ -85,12 +85,7 @@ void Scenario1::Update()
 		isTargetBroken = false;
 	}
 
-	ImGui::Text("0x=%f", previousPos[0].x);
-	ImGui::Text("0y=%f", previousPos[0].y);
-	ImGui::Text("1x=%f", previousPos[1].x);
-	ImGui::Text("1y=%f", previousPos[1].y);
-	ImGui::Text("2x=%f", previousPos[2].x);
-	ImGui::Text("2y=%f", previousPos[2].y);
+	
 
 	
 }

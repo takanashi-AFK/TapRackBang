@@ -57,7 +57,7 @@ XMFLOAT3 Camera::GetPosition() { return _position; }
 //ビュー行列を取得
 XMMATRIX Camera::GetViewMatrix() { return _view; }
 
-XMVECTOR Camera::GetSightLine() { return XMLoadFloat3(&_target) - XMLoadFloat3(&_position);}
+XMVECTOR Camera::GetSightLine() { return XMLoadFloat3(&_position) - XMLoadFloat3(&_target);}
 
 //プロジェクション行列を取得
 XMMATRIX Camera::GetProjectionMatrix() { return _proj; }
