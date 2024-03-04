@@ -13,16 +13,19 @@ class Player :
 {
 public:
     int hPlayerModel_;
+    int debugModel;
     float speed;
     float sensitivity;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
+    Transform debT;
  
 
     XMVECTOR playerForward;
     SceneManager* pSM;
     int hGroundModelHandle_;
+    XMFLOAT3 newCenter_;
 
     Player();
     Player(GameObject* parent);
