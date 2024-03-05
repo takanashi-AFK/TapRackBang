@@ -20,8 +20,8 @@ void Player::Initialize()
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
 	transform_.position_.y = 20;
-	sensitivity = 0.5f;
-	//Instantiate<Gun>(this);
+	sensitivity = 0.2f;
+	Instantiate<Gun>(this);
 	debugModel = Model::Load("DebugCollision/BoxCollider.fbx");
 }
 
@@ -55,7 +55,7 @@ void Player::Update()
 		groundRayData.start.x = transform_.position_.x + MODEL_SIZE / 2;
 		groundRayData.dir = XMFLOAT3(1, 0, 0);
 		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist <= speed) {
+		if (groundRayData.hit && groundRayData.dist < speed) {
 			transform_.position_.x -= speed;
 		}
 	}
@@ -148,12 +148,21 @@ void Player::Update()
 	//マウスの移動量を角度として蓄積する
 	rotateAngle.x += Input::GetMouseMove().x * sensitivity;
 	rotateAngle.y += Input::GetMouseMove().y * sensitivity;
-	//ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
+	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
+
+	const float upperlimit = -1.f;
+	if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
+
+	const float lowerlimit = 80.f;
+	if (rotateAngle.y > lowerlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
+
+	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
+
 	XMFLOAT3 camTarget{};
 	XMFLOAT3 camPosition{};
 
-	/*y軸回転*/ {
-		const float distance{ 20.f };
+	/*Y軸回転*/ {
+		const float distance{ 10.f };
 		//実際には仮のベクトルで、playerToCamTargetではない、いい変数名を探そう
 		XMVECTOR playerToCamTarget{ 0.f,0.f,1.f,0.f };
 		//Y軸で回る回転行列を作成、playerToCamTargetを回転させる
@@ -169,60 +178,61 @@ void Player::Update()
 		//プレイヤーからターゲットに向かう方向ベクトルの逆ベクトルをとり、
 		//プレイヤーからポジションへのベクトルを生成、回転
 		XMVECTOR playerToCamPosition = -playerToCamTarget;
-		playerToCamPosition = XMVector3Transform(playerToCamPosition, XMMatrixRotationY(XMConvertToRadians(30)));
+		playerToCamPosition = XMVector3Transform(playerToCamPosition, XMMatrixRotationY(XMConvertToRadians(-30)));
 
 		XMVECTOR originToCamPosition = originToPlayer + playerToCamPosition;
 
 		//カメラのターゲットを作成
 		XMStoreFloat3(&camTarget, originToCamTarget);
 		XMStoreFloat3(&camPosition, originToCamPosition);
-		XMStoreFloat3(&debT.position_, (XMLoadFloat3(&camTarget) + XMLoadFloat3(&camPosition)) * 0.5 );
+
 		ImGui::Text("Tx = %f,Ty = %f,Tz = %f", camTarget.x, camTarget.y, camTarget.z);
 		ImGui::Text("Px = %f,Py = %f,Pz = %f", camPosition.x, camPosition.y, camPosition.z);
-		ImGui::Text("nc x = %f,nc y = %f,nc z = %f", debT.position_.x, debT.position_.y, debT.position_.z);
 		ImGui::Text("tr x = %f,tr y = %f,tr z = %f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	}
-	/*x軸回転*/ {
+
+	/*X軸回転*/ {
+		
+		// 新しい中心点を作成
 		XMFLOAT3 newCenter{};
-		XMVECTOR originToCamTarget{};
-		XMVECTOR originToNewCenter{};
-
-		XMStoreFloat3(&newCenter, (XMLoadFloat3(&camTarget) - XMLoadFloat3(&camPosition)) * 0.5);
-
-		ImGui::Text("x = %f,y = %f,z = %f", newCenter.x, newCenter.y, newCenter.z);
-
-		XMVECTOR rotateAxis = XMLoadFloat3(&newCenter) - XMLoadFloat3(&center);
-
-		XMMATRIX rotateMatrix = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
+		XMStoreFloat3(&newCenter, (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f);
+		debT.position_ = newCenter;
 		
+		// 回転の軸を作成
+		XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&transform_.position_));
+
+		// 回転行列を作成
+		XMMATRIX rotAxisMat = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
+
+		// 回転させるベクトルを用意
 		XMVECTOR newCenterToCamTarget = XMLoadFloat3(&camTarget) - XMLoadFloat3(&newCenter);
-		
-		newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotateMatrix);
-		//ここまではとりあえずOK
 
+		// 回転させる
+		newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotAxisMat);
 
-		XMVECTOR origin_To_camTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
-		//これがたぶんoriginToNewCenter + newCenterToCamTargetとかになるん		
-		
-		XMStoreFloat3(&camTarget, origin_To_camTarget);
-
+		// 逆ベクトルを作成
 		XMVECTOR newCenterToCamPosition = -newCenterToCamTarget;
-		XMVECTOR originToCamPosition = XMLoadFloat3(&center) + newCenterToCamPosition;
+
+		// 原点からのベクトルを作成
+		XMVECTOR originToCamTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
+		XMVECTOR originToCamPosition = XMLoadFloat3(&newCenter) + newCenterToCamPosition;
+
+
+		XMStoreFloat3(&camTarget, originToCamTarget);
 		XMStoreFloat3(&camPosition, originToCamPosition);
-		
 	}
+
+
 	Camera::SetTarget(camTarget);
 	Camera::SetPosition(camPosition);
-
-
 
 }
 
 void Player::Draw()
 {
-	
 	Model::SetTransform(debugModel, debT);
 	Model::Draw(debugModel);
+
 	Model::SetTransform(hPlayerModel_, transform_);
 	Model::Draw(hPlayerModel_);
 }
