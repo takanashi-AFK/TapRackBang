@@ -183,9 +183,6 @@ void Player::Update()
 		ImGui::Text("tr x = %f,tr y = %f,tr z = %f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	}
 	/*xŽ²‰ñ“]*/ {
-		
-
-		
 		XMFLOAT3 newCenter{};
 		XMVECTOR originToCamTarget{};
 		XMVECTOR originToNewCenter{};
@@ -195,14 +192,16 @@ void Player::Update()
 		ImGui::Text("x = %f,y = %f,z = %f", newCenter.x, newCenter.y, newCenter.z);
 
 		XMVECTOR rotateAxis = XMLoadFloat3(&newCenter) - XMLoadFloat3(&center);
-		XMMATRIX rotateMatrix = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(-rotateAngle.y));
+
+		XMMATRIX rotateMatrix = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
+		
 		XMVECTOR newCenterToCamTarget = XMLoadFloat3(&camTarget) - XMLoadFloat3(&newCenter);
+		
 		newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotateMatrix);
 		//‚±‚±‚Ü‚Å‚Í‚Æ‚è‚ ‚¦‚¸OK
 
-		originToNewCenter = XMLoadFloat3(&newCenter) - XMLoadFloat3(&center);//‚±‚ê‰½‚ªˆá‚¤‚ñ‚¾
 
-		XMVECTOR origin_To_camTarget = XMLoadFloat3(&center) + newCenterToCamTarget;
+		XMVECTOR origin_To_camTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
 		//‚±‚ê‚ª‚½‚Ô‚ñoriginToNewCenter + newCenterToCamTarget‚Æ‚©‚É‚È‚é‚ñ		
 		
 		XMStoreFloat3(&camTarget, origin_To_camTarget);
