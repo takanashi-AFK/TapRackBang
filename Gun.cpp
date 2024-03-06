@@ -16,7 +16,7 @@ void Gun::Update()
 {
 	Player* pPlayer = (Player*)FindObject("Player");
 
-	if (Input::IsKeyDown(DIK_SPACE)) {
+	if (Input::IsMouseButtonDown(0) ){
 		Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
 		pBullet->Shot(pPlayer->GetPosition(), Camera::GetSightLine());
 	}

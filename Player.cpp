@@ -19,7 +19,9 @@ void Player::Initialize()
 	speed = 0.1f;
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
+	transform_.position_.x = -2;
 	transform_.position_.y = 20;
+	transform_.position_.z = -10;
 	sensitivity = 0.2f;
 	Instantiate<Gun>(this);
 	debugModel = Model::Load("DebugCollision/BoxCollider.fbx");
@@ -29,6 +31,7 @@ void Player::Update()
 {
 
 	XMFLOAT3 center = transform_.position_;
+	center.y = center.y + 4;
 	PlayerMove();
 	//ステージのオブジェクトを探す 
 	//カメラ移動
@@ -150,8 +153,8 @@ void Player::Update()
 	rotateAngle.y += Input::GetMouseMove().y * sensitivity;
 	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
 
-	const float upperlimit = -1.f;
-	if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
+	//const float upperlimit = -1.f;
+	//if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
 
 	const float lowerlimit = 80.f;
 	if (rotateAngle.y > lowerlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
@@ -196,10 +199,11 @@ void Player::Update()
 		// 新しい中心点を作成
 		XMFLOAT3 newCenter{};
 		XMStoreFloat3(&newCenter, (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f);
+
 		debT.position_ = newCenter;
 		
 		// 回転の軸を作成
-		XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&transform_.position_));
+		XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&center));
 
 		// 回転行列を作成
 		XMMATRIX rotAxisMat = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
@@ -220,6 +224,8 @@ void Player::Update()
 
 		XMStoreFloat3(&camTarget, originToCamTarget);
 		XMStoreFloat3(&camPosition, originToCamPosition);
+
+		ImGui::Text("%f,%f,%f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	}
 
 
