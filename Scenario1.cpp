@@ -1,7 +1,7 @@
 #include "Scenario1.h"
 
 Scenario1::Scenario1(GameObject* parent)
-	:GameObject(parent,"Scenario1")
+	:GameObject(parent,"Scenario1"), time_(nullptr)
 {
 	isTargetBroken = false;
 }
@@ -49,6 +49,8 @@ void Scenario1::Initialize()
 	}
 	Instantiate<SimpleStage>(this);
 	Instantiate<Player>(this);
+	time_ = new Text;
+	time_->Initialize();
 }
 
 void Scenario1::Update()
@@ -85,14 +87,18 @@ void Scenario1::Update()
 		isTargetBroken = false;
 	}
 
-	
+	frame_++;
 
-	
+	if (frame_ / 60 > 10) {
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT, 0.5f);
+	}
+		
 }
 
 void Scenario1::Draw()
 {
-	
+	time_ -> Draw(30, 30, frame_ / 60);
 }
 
 void Scenario1::Release()

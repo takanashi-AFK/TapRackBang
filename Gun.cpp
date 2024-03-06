@@ -18,7 +18,7 @@ void Gun::Update()
 
 	if (Input::IsMouseButtonDown(0) ){
 		Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
-		pBullet->Shot(pPlayer->GetPosition(), Camera::GetSightLine());
+		pBullet->Shot(pPlayer->GetPosition(), -Camera::GetSightLine());
 	}
 
 	

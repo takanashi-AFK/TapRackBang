@@ -22,15 +22,14 @@ class Scenario1 : public GameObject,public ActionListener {
     XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
     std::array<XMFLOAT3,3> previousPos;
 
-    //SphereTarget* sp1;
-    //SphereTarget* sp2;
-    //SphereTarget* sp3;
-
     SphereTarget* sp[3];
     int xPos, yPos;
     bool isTargetBroken;
     XMFLOAT3 brokenTargetPos;
     int brokenTarget;
+    Text* time_;
+
+    int frame_;
 
 public:
     Scenario1(GameObject* parent);

@@ -11,6 +11,7 @@ enum SCENE_ID
 	SCENE_ID_MENU,
 	SCENE_ID_PLAY,
 	SCENE_ID_SCENARIO1,
+	SCENE_ID_RESULT,
 };
 
 //-----------------------------------------------------------

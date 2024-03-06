@@ -16,6 +16,7 @@ public:
     int debugModel;
     float speed;
     float sensitivity;
+    XMFLOAT2 rotateAngle;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;

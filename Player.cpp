@@ -252,6 +252,7 @@ void Player::PlayerMove()
 	//‚±‚±‚ÌƒxƒNƒgƒ‹ˆê‚Â‚É‚Ü‚Æ‚ß‚ç‚ê‚é‚ñ‚¾‚Á‚½‚ç‚Ü‚Æ‚ß‚Ä‚µ‚Ü‚¢‚½‚¢
 	vMoveX_ = { speed,0.0f,0.0f,0.0f };
 	vMoveZ_ = { 0.0f,0.0f,speed,0.0f };
+	
 
 	vPlayerPos_ = XMLoadFloat3(&transform_.position_);
 	XMMATRIX rotateMatY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));

@@ -7,6 +7,14 @@ MenuScene::MenuScene(GameObject* parent)
 
 void MenuScene::Initialize()
 {
+	hBackGround_ = Image::Load("MenuImage/menu.png");
+	assert(hBackGround_ >= 0);
+
+	hScenario1Button_ = Image::Load("MenuImage/Sceneario1.png");
+	assert(hScenario1Button_ >= 0);
+
+	buttonTransform_.position_ = { 0.5,-0.7,0 };
+	buttonTransform_.scale_ = { 0.7, 0.5, 0.7 };
 }
 
 void MenuScene::Update()
@@ -24,10 +32,25 @@ void MenuScene::Update()
 		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
+
+	mousePos_ = Input::GetMousePosition();
+
+	if (mousePos_.x > 1280 && mousePos_.x < 1600 && mousePos_.y > 860 && mousePos_.y < 970) {
+		if (Input::IsMouseButtonDown(0)) {
+			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+			pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);
+		}
+	}
 }
 
 void MenuScene::Draw()
 {
+	Image::SetTransform(hBackGround_, transform_);
+	Image::Draw(hBackGround_);
+
+	Image::SetTransform(hScenario1Button_, buttonTransform_);
+	Image::Draw(hScenario1Button_);
+
 }
 
 void MenuScene::Release()

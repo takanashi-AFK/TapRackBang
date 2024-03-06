@@ -1,25 +1,17 @@
 #pragma once
 #include "Engine/GameObject.h"
-#include "Engine/SceneManager.h"
-#include "Engine/Text.h"
-#include "ImGuiManager.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
-
+#include "Engine/SceneManager.h";
 //テストシーンを管理するクラス
-class MenuScene : public GameObject
+class ResultScene : public GameObject
 {
 
-	int hScenario1Button_;
 	int hBackGround_;
-	Transform buttonTransform_;
-
-	XMFLOAT3 mousePos_;
-
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）
-	MenuScene(GameObject* parent);
+	ResultScene(GameObject* parent);
 
 	//初期化
 	void Initialize() override;
