@@ -6,8 +6,9 @@
 #include "Engine/Model.h"
 class Gun:public GameObject
 {
-public:
 	int hRailGunModel_;
+	XMVECTOR sightLine_;
+public:
 	Gun(GameObject* parent);
 	void Initialize()override;
 	void Update()override;

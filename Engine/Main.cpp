@@ -279,11 +279,17 @@ void ToggleFullScreen(HWND hWnd, int screenWidth, int screenHeight)
 		ShowCursor(true);
 	}
 	else {
-		// ウィンドウモードに切り替える
-		SetWindowLong(hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW);
-		SetWindowLong(hWnd, GWL_EXSTYLE, WS_EX_OVERLAPPEDWINDOW);
-		ShowWindow(hWnd, SW_NORMAL);
-		SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, screenWidth, screenHeight, SWP_FRAMECHANGED);
-		ShowCursor(true);
+  DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+        DWORD dwExStyle = WS_EX_OVERLAPPEDWINDOW;
+
+        // タイトルバーの高さを考慮してウィンドウのサイズを再設定
+        RECT winRect = { 0, 0, screenWidth, screenHeight };
+        AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+
+        SetWindowLong(hWnd, GWL_STYLE, dwStyle);
+        SetWindowLong(hWnd, GWL_EXSTYLE, dwExStyle);
+        SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, winRect.right - winRect.left, winRect.bottom - winRect.top, SWP_FRAMECHANGED);
+
+        ShowCursor(true);
 	}
 }

@@ -1,7 +1,9 @@
 #include "MenuScene.h"
 
 MenuScene::MenuScene(GameObject* parent)
-	: GameObject(parent, "PlayScene")
+	: GameObject(parent, "PlayScene"),
+	hScenario1Button_(-1),
+	hBackGround_(-1)
 {
 }
 
@@ -34,8 +36,9 @@ void MenuScene::Update()
 	ImGui::End();
 
 	mousePos_ = Input::GetMousePosition();
+	ImGui::Text("%f,%f", mousePos_.x, mousePos_.y);
 
-	if (mousePos_.x > 1280 && mousePos_.x < 1600 && mousePos_.y > 860 && mousePos_.y < 970) {
+	if (mousePos_.x > 800 && mousePos_.x < 1100 && mousePos_.y > 560 && mousePos_.y < 660) {
 		if (Input::IsMouseButtonDown(0)) {
 			SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 			pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);

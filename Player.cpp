@@ -4,13 +4,8 @@ const float MODEL_SIZE{ 1 };
 //あらかじめ30度と90度のベクトルを作っておく
 //その角度まで開いたら、camposをそのベクトルにしちゃう
 
-
-Player::Player()
-{
-}
-
 Player::Player(GameObject* parent)
-			:GameObject(parent, "Player")
+			:GameObject(parent, "Player"), hPlayerModel_(-1)
 {
 }
 
@@ -24,7 +19,6 @@ void Player::Initialize()
 	transform_.position_.z = -10;
 	sensitivity = 0.2f;
 	Instantiate<Gun>(this);
-	debugModel = Model::Load("DebugCollision/BoxCollider.fbx");
 }
 
 void Player::Update()
@@ -236,8 +230,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	Model::SetTransform(debugModel, debT);
-	Model::Draw(debugModel);
+	
 
 	Model::SetTransform(hPlayerModel_, transform_);
 	Model::Draw(hPlayerModel_);

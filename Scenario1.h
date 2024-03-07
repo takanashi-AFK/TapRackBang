@@ -18,6 +18,7 @@ const int PLACE_SIZE{ 4 };
 const float PLACE_OUTSET{ 2.25f };
 
 class Scenario1 : public GameObject,public ActionListener {
+
     Transform MapTransform_;
     XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
     std::array<XMFLOAT3,3> previousPos;

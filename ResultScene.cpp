@@ -1,6 +1,7 @@
 #include "ResultScene.h"
 
-ResultScene::ResultScene(GameObject* parent)
+ResultScene::ResultScene(GameObject* parent) :
+	GameObject(parent, "ResultScene"), hBackGround_(-1)
 {
 }
 

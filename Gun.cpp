@@ -2,7 +2,7 @@
 
 //銃を撃つ、リロード、ADS
 Gun::Gun(GameObject* parent):
-	GameObject(parent, "Player")
+	GameObject(parent, "Player"),hRailGunModel_(-1)
 {
 }
 
@@ -20,6 +20,10 @@ void Gun::Update()
 		Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
 		pBullet->Shot(pPlayer->GetPosition(), -Camera::GetSightLine());
 	}
+
+
+
+
 
 	
 	SAFE_RELEASE(pPlayer);

@@ -3,7 +3,7 @@
 #include "Engine/Input.h"
 
 SplashScene::SplashScene(GameObject* parent) 
-	: GameObject(parent, "PlayScene")
+	: GameObject(parent, "PlayScene"), hSplash_(-1)
 {
 }
 

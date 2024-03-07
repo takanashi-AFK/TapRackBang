@@ -1,7 +1,7 @@
 #include "TitleScene.h"
 
 TitleScene::TitleScene(GameObject* parent)
-	: GameObject(parent, "PlayScene")
+	: GameObject(parent, "PlayScene"), hBackGround_(-1)
 {
 }
 

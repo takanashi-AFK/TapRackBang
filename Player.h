@@ -13,7 +13,7 @@ class Player :
 {
 public:
     int hPlayerModel_;
-    int debugModel;
+    
     float speed;
     float sensitivity;
     XMFLOAT2 rotateAngle;
