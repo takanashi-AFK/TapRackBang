@@ -156,6 +156,7 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="MenuScene.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="MenuScene.h" />

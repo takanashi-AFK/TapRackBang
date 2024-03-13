@@ -5,6 +5,7 @@
     #include "Bullet.h"
     #include "Scenario1.h"
     #include "ActionListener.h"
+    #include "Global.h"
 
     class Scenario1;
     class SphereTarget:public GameObject

@@ -144,6 +144,7 @@
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="ActionListener.cpp" />
     <ClCompile Include="ResultScene.cpp" />
+    <ClCompile Include="Global.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -264,6 +265,7 @@
     <ClInclude Include="Gun.h" />
     <ClInclude Include="ActionListener.h" />
     <ClInclude Include="ResultScene.h" />
+    <ClInclude Include="Global.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

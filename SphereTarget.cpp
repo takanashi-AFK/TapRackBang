@@ -75,6 +75,7 @@ void SphereTarget::OnCollision(GameObject* pTarget)
 		KillMe();
 		pTarget->KillMe();
 		NotifyTargetDestroy(sc1);
+		g_Point += 1;
 	}
 }
 

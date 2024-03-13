@@ -2,12 +2,16 @@
 #include "Engine/GameObject.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
-#include "Engine/SceneManager.h";
+#include "Engine/SceneManager.h"
+#include "Engine/Text.h"
+#include "Global.h"
 //テストシーンを管理するクラス
 class ResultScene : public GameObject
 {
-
+	Text* pScore;
 	int hBackGround_;
+	int score;
+
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

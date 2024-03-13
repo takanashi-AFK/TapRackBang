@@ -8,6 +8,9 @@ ResultScene::ResultScene(GameObject* parent) :
 void ResultScene::Initialize()
 {
 	hBackGround_ = Image::Load("ResultImage/Result.png");
+	pScore = new Text;
+	pScore->Initialize();
+	score = g_Point;
 }
 
 void ResultScene::Update()
@@ -22,6 +25,9 @@ void ResultScene::Draw()
 {
 	Image::SetTransform(hBackGround_, transform_);
 	Image::Draw(hBackGround_);
+
+	pScore->Draw(30, 30, score);
+
 }
 
 void ResultScene::Release()
