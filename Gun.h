@@ -14,6 +14,8 @@ public:
 	void Update()override;
 	void Draw()override;
 	void Release()override;
+	void GunShot(XMFLOAT3 pos);
+
 
 	enum GunKinds {
 		GUN_HANDGUN,

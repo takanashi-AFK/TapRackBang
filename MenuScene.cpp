@@ -44,6 +44,11 @@ void MenuScene::Update()
 			pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);
 		}
 	}
+
+	if (Input::IsKeyDown(DIK_D)) {
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_DEPTH, TID_BLACKOUT, 0.5f);
+	}
 }
 
 void MenuScene::Draw()

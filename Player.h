@@ -7,7 +7,7 @@
 #include "Engine/Camera.h"
 #include "ImGuiManager.h"
 #include "Gun.h"
-
+const float MODEL_SIZE{ 1 };
 class Player :
     public GameObject
 {
@@ -25,10 +25,8 @@ public:
 
     XMVECTOR playerForward;
     SceneManager* pSM;
-    int hGroundModelHandle_;
     XMFLOAT3 newCenter_;
 
-    Player();
     Player(GameObject* parent);
     void Initialize()override;
     void Update()override;

@@ -7,6 +7,7 @@
 #include "../PlayScene.h"
 #include "../Scenario1.h"
 #include "../ResultScene.h"
+#include "../DepthScenario.h"
 
 #include "Model.h"
 #include "Image.h"
@@ -53,6 +54,7 @@ void SceneManager::Update()
 		case SCENE_ID_MENU: Instantiate<MenuScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
 		case SCENE_ID_SCENARIO1:Instantiate<Scenario1>(this); break;
+		case SCENE_ID_DEPTH:Instantiate<DepthScenario>(this); break;
 		case SCENE_ID_RESULT:Instantiate<ResultScene>(this); break;
 		}
 		Audio::Initialize();

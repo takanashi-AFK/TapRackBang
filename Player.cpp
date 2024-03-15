@@ -1,6 +1,6 @@
 #include "Player.h"
 
-const float MODEL_SIZE{ 1 };
+
 //あらかじめ30度と90度のベクトルを作っておく
 //その角度まで開いたら、camposをそのベクトルにしちゃう
 
@@ -26,70 +26,7 @@ void Player::Update()
 
 	XMFLOAT3 center = transform_.position_;
 	center.y = center.y + 4;
-	PlayerMove();
-	//ステージのオブジェクトを探す 
-	//カメラ移動
-	SimpleStage* pStage = (SimpleStage*)FindObject("SimpleStage");
-	hGroundModelHandle_ = pStage->GetModelHandle();
-
-	/////////////////////接地処理//////////////////////
-	RayCastData groundRayData;
-	groundRayData.start = transform_.position_;
-	groundRayData.start.y = transform_.position_.y - MODEL_SIZE/2;
-	groundRayData.dir = XMFLOAT3(0, -1, 0);
-	Model::RayCast(hGroundModelHandle_, &groundRayData);
-	if (groundRayData.hit) {
-		transform_.position_.y -= groundRayData.dist;
-	}
-	//////////////////////////////////////////////////
-
-	////////////////壁接触処理////////////////////////
-
 	
-	/*右方向のレイキャスト*/   {
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.x = transform_.position_.x + MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.x -= speed;
-		}
-	}
-
-	/*左方向のレイキャスト*/   {
-		
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.x = transform_.position_.x - MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(-1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.x += speed;
-		}
-	}
-
-	/*奥方向のレイキャスト*/   {
-		
-		groundRayData.start = transform_.position_;
-		groundRayData.start.z = transform_.position_.z + MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, 1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.z -= speed;
-		}
-	}
-
-	/*手前方向のレイキャスト*/ {
-		// Z軸負方向のレイキャスト
-		groundRayData.start = transform_.position_;
-		groundRayData.start.z = transform_.position_.z - MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, -1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.z += speed;
-		}
-	}
 	
 	/*試行錯誤跡*/{
 		/*
@@ -150,13 +87,18 @@ void Player::Update()
 	//const float upperlimit = -1.f;
 	//if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
 
-	const float lowerlimit = 80.f;
-	if (rotateAngle.y > lowerlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
-
 	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
 
 	XMFLOAT3 camTarget{};
 	XMFLOAT3 camPosition{};
+
+	
+		const float upperlimit = -30;
+		if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
+
+		const float lowerlimit = 50.f;
+		if (rotateAngle.y > lowerlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
+	
 
 	/*Y軸回転*/ {
 		const float distance{ 10.f };

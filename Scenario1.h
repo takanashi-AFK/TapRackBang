@@ -29,6 +29,8 @@ class Scenario1 : public GameObject,public ActionListener {
     XMFLOAT3 brokenTargetPos;
     int brokenTarget;
     Text* time_;
+    int hGroundModelHandle_;
+    int speed;
 
     int frame_;
 
