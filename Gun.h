@@ -4,6 +4,9 @@
 #include "Engine/Input.h"
 #include "Bullet.h"
 #include "Engine/Model.h"
+#include "SphereTarget.h"
+#include "Engine/RootObject.h"
+#include <list>
 class Gun:public GameObject
 {
 	int hRailGunModel_;

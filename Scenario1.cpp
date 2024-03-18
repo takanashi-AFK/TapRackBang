@@ -13,7 +13,7 @@ void Scenario1::Initialize()
 	{
 	for (int y = 0; y < PLACE_SIZE; y++)
 		for (int x = 0; x < PLACE_SIZE; x++) {
-			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x - 4, PLACE_OUTSET * y -15, 3);
+			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x - 4, PLACE_OUTSET * y -15, 50);
 		}
 	
 		sp[0] = Instantiate<SphereTarget>(this);
@@ -61,72 +61,12 @@ void Scenario1::Update()
 	Player* pPlayer = (Player*)FindObject("Player");
 	pPlayer->PlayerMove();
 	XMFLOAT3 PPos = pPlayer->GetPosition();
-	SimpleStage* pStage = (SimpleStage*)FindObject("SimpleStage");
-	hGroundModelHandle_ = pStage->GetModelHandle();
-
-	/////////////////////接地処理//////////////////////
-	RayCastData groundRayData;
-	groundRayData.start = PPos;
-	groundRayData.start.y = PPos.y - MODEL_SIZE / 2;
-	groundRayData.dir = XMFLOAT3(0, -1, 0);
-	Model::RayCast(hGroundModelHandle_, &groundRayData);
-	if (groundRayData.hit) {
-		PPos.y -= groundRayData.dist;
-	}
-	//////////////////////////////////////////////////
-
-	////////////////壁接触処理////////////////////////
+	
 
 
-	/*右方向のレイキャスト*/ {
-		groundRayData.dist = 99999.f;
-		groundRayData.start = PPos;
-		groundRayData.start.x = PPos.x + MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			PPos.x -= speed;
-		}
-	}
 
-	/*左方向のレイキャスト*/ {
-
-		groundRayData.dist = 99999.f;
-		groundRayData.start = PPos;
-		groundRayData.start.x = PPos.x - MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(-1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			PPos.x += speed;
-		}
-	}
-
-	/*奥方向のレイキャスト*/ {
-
-		groundRayData.start = PPos;
-		groundRayData.start.z = PPos.z + MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, 1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			PPos.z -= speed;
-		}
-	}
-
-	/*手前方向のレイキャスト*/ {
-		// Z軸負方向のレイキャスト
-		groundRayData.start = PPos;
-		groundRayData.start.z = PPos.z - MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, -1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			PPos.z += speed;
-		}
-	}
-	pPlayer->SetPosition(PPos);
 
 	ImGui::Begin("rueausu");
-	ImGui::Text("Scenario1");
-
 	if (ImGui::Button("SceneChange")) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);

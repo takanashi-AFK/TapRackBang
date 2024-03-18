@@ -1,6 +1,7 @@
 #include "SphereTarget.h"
 
-SphereTarget::SphereTarget(GameObject* parent)
+SphereTarget::SphereTarget(GameObject* parent):
+	GameObject(parent,"SphereTarget")
 {
 }
 

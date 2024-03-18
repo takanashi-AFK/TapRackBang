@@ -19,6 +19,9 @@ void Player::Initialize()
 	transform_.position_.z = -10;
 	sensitivity = 0.2f;
 	Instantiate<Gun>(this);
+
+	hCrosshair_ = Image::Load("crossHair.png");
+	assert(hCrosshair_ >= 0);
 }
 
 void Player::Update()
@@ -26,7 +29,67 @@ void Player::Update()
 
 	XMFLOAT3 center = transform_.position_;
 	center.y = center.y + 4;
-	
+
+	SimpleStage* pStage = (SimpleStage*)FindObject("SimpleStage");
+	int hGroundModelHandle_ = pStage->GetModelHandle();
+
+	/////////////////////接地処理//////////////////////
+	RayCastData groundRayData;
+	groundRayData.start = transform_.position_;
+	groundRayData.start.y = transform_.position_.y - MODEL_SIZE / 2;
+	groundRayData.dir = XMFLOAT3(0, -1, 0);
+	Model::RayCast(hGroundModelHandle_, &groundRayData);
+	if (groundRayData.hit) {
+		transform_.position_.y -= groundRayData.dist;
+	}
+	//////////////////////////////////////////////////
+
+	////////////////壁接触処理////////////////////////
+	/*右方向のレイキャスト*/ {
+		groundRayData.dist = 99999.f;
+		groundRayData.start = transform_.position_;
+		groundRayData.start.x =  MODEL_SIZE / 2;
+		groundRayData.dir = XMFLOAT3(1, 0, 0);
+		Model::RayCast(hGroundModelHandle_, &groundRayData);
+		if (groundRayData.hit && groundRayData.dist < speed) {
+			transform_.position_.x -= speed;
+		}
+	}
+
+	/*左方向のレイキャスト*/ {
+
+		groundRayData.dist = 99999.f;
+		groundRayData.start = transform_.position_;
+		groundRayData.start.x = MODEL_SIZE / 2;
+		groundRayData.dir = XMFLOAT3(-1, 0, 0);
+		Model::RayCast(hGroundModelHandle_, &groundRayData);
+		if (groundRayData.hit && groundRayData.dist < speed) {
+			transform_.position_.x += speed;
+		}
+	}
+
+	/*奥方向のレイキャスト*/ {
+		groundRayData.dist = 99999.f;
+		groundRayData.start = transform_.position_;
+		groundRayData.start.z = MODEL_SIZE / 2;
+		groundRayData.dir = XMFLOAT3(0, 0, 1);
+		Model::RayCast(hGroundModelHandle_, &groundRayData);
+		if (groundRayData.hit && groundRayData.dist < speed) {
+			transform_.position_.z -= speed;
+		}
+	}
+
+	/*手前方向のレイキャスト*/ {
+		// Z軸負方向のレイキャスト
+		groundRayData.dist = 99999.f;
+		groundRayData.start = transform_.position_;
+		groundRayData.start.z =  MODEL_SIZE / 2;
+		groundRayData.dir = XMFLOAT3(0, 0, -1);
+		Model::RayCast(hGroundModelHandle_, &groundRayData);
+		if (groundRayData.hit && groundRayData.dist < speed) {
+			transform_.position_.z += speed;
+		}
+	}
 	
 	/*試行錯誤跡*/{
 		/*
@@ -172,10 +235,13 @@ void Player::Update()
 
 void Player::Draw()
 {
-	
+	Transform tCrosshair;
 
+	Image::SetTransform(hCrosshair_, tCrosshair);
+	Image::Draw(hCrosshair_);
 	Model::SetTransform(hPlayerModel_, transform_);
 	Model::Draw(hPlayerModel_);
+
 }
 
 void Player::Release()
@@ -184,38 +250,68 @@ void Player::Release()
 
 void Player::PlayerMove()
 {
-	//ここのベクトル一つにまとめられるんだったらまとめてしまいたい
-	vMoveX_ = { speed,0.0f,0.0f,0.0f };
-	vMoveZ_ = { 0.0f,0.0f,speed,0.0f };
-	
+	////ここのベクトル一つにまとめられるんだったらまとめてしまいたい
+	//vMoveX_ = { speed,0.0f,0.0f,0.0f };
+	//vMoveZ_ = { 0.0f,0.0f,speed,0.0f };
+	//
 
-	vPlayerPos_ = XMLoadFloat3(&transform_.position_);
-	XMMATRIX rotateMatY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
+	//vPlayerPos_ = XMLoadFloat3(&transform_.position_);
+	//XMMATRIX rotateMatY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
 
-	vMoveX_ = XMVector3TransformCoord(vMoveX_, rotateMatY);
-	vMoveZ_ = XMVector3TransformCoord(vMoveZ_, rotateMatY);
+	//vMoveX_ = XMVector3TransformCoord(vMoveX_, rotateMatY);
+	//vMoveZ_ = XMVector3TransformCoord(vMoveZ_, rotateMatY);
+
+	//if (Input::IsKey(DIK_W)) {
+	//	XMVector3Normalize(vMoveZ_);
+	//	vPlayerPos_ += vMoveZ_;
+
+	//}
+
+	//if (Input::IsKey(DIK_A)) {
+	//	XMVector3Normalize(vMoveX_);
+	//	vPlayerPos_ -= vMoveX_;
+	//}
+
+	//if (Input::IsKey(DIK_S)) {
+	//	XMVector3Normalize(vMoveZ_);
+	//	vPlayerPos_ -= vMoveZ_;
+	//}
+
+	//if (Input::IsKey(DIK_D)) {
+	//	XMVector3Normalize(vMoveX_);
+	//	vPlayerPos_ += vMoveX_;
+	//}
+	//XMVector3Normalize(vPlayerPos_);
+	//XMStoreFloat3(&transform_.position_, vPlayerPos_);
+	XMVECTOR dir{};
+	XMVECTOR sightLine = Camera::GetSightLine();
+	sightLine = XMVectorSetY(sightLine, 0);
+	sightLine = XMVector3Normalize(sightLine);
+	float rotationAngle = 0.0f;
+
 
 	if (Input::IsKey(DIK_W)) {
-		XMVector3Normalize(vMoveZ_);
-		vPlayerPos_ += vMoveZ_;
+		dir += sightLine;
 	}
 
 	if (Input::IsKey(DIK_A)) {
-		XMVector3Normalize(vMoveX_);
-		vPlayerPos_ -= vMoveX_;
+		dir += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(-90)));
 	}
 
 	if (Input::IsKey(DIK_S)) {
-		XMVector3Normalize(vMoveZ_);
-		vPlayerPos_ -= vMoveZ_;
+		dir += -sightLine;
 	}
 
 	if (Input::IsKey(DIK_D)) {
-		XMVector3Normalize(vMoveX_);
-		vPlayerPos_ += vMoveX_;
+		dir += XMVector3Transform(sightLine, XMMatrixRotationY(XMConvertToRadians(90)));
 	}
-	XMVector3Normalize(vPlayerPos_);
-	XMStoreFloat3(&transform_.position_, vPlayerPos_);
+
+
+	transform_.rotate_.y = rotationAngle;
+
+	XMVECTOR move = dir * speed;
+
+	XMStoreFloat3(&transform_.position_, XMLoadFloat3(&transform_.position_) + move);
 }
 
 XMVECTOR Player::GetForwardVector()

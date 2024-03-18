@@ -3,6 +3,7 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 #include "SimpleStage.h"
+#include "Engine/Image.h"
 #include "Engine/SceneManager.h"
 #include "Engine/Camera.h"
 #include "ImGuiManager.h"
@@ -13,15 +14,14 @@ class Player :
 {
 public:
     int hPlayerModel_;
-    
+    int hCrosshair_;
     float speed;
     float sensitivity;
-    XMFLOAT2 rotateAngle;
+    XMFLOAT2 rotateAngle_;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
     Transform debT;
- 
 
     XMVECTOR playerForward;
     SceneManager* pSM;

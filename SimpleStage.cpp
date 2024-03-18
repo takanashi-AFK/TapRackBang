@@ -8,7 +8,9 @@ SimpleStage::SimpleStage(GameObject* parent)
 void SimpleStage::Initialize()
 {
 	hSimpleStage_ = Model::Load("Scenario1Map.fbx");
-	assert(hSimpleStage_ > 0);
+	assert(hSimpleStage_ >= 0);
+
+	
 }
 
 void SimpleStage::Update()

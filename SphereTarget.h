@@ -28,5 +28,6 @@
 
         void NotifyTargetDestroy(Scenario1* sc);
         XMFLOAT3 ReturnBreakPos();
+        int GetHandle() {return hSphereModel_; };
     };
 

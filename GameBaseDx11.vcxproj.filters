@@ -145,6 +145,10 @@
     <ClCompile Include="ActionListener.cpp" />
     <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Global.cpp" />
+    <ClCompile Include="DepthScenario.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -266,6 +270,10 @@
     <ClInclude Include="ActionListener.h" />
     <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="DepthScenario.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">
