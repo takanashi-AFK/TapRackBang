@@ -82,6 +82,7 @@ void SphereTarget::OnCollision(GameObject* pTarget)
 
 void SphereTarget::NotifyTargetDestroy(Scenario1* sc)
 {
+	AudioManager::PlayKillSound();
 	pos = transform_.position_;
 	sc->onAction(pos);
 }

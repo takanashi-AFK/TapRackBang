@@ -13,7 +13,7 @@ void Scenario1::Initialize()
 	{
 	for (int y = 0; y < PLACE_SIZE; y++)
 		for (int x = 0; x < PLACE_SIZE; x++) {
-			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x - 4, PLACE_OUTSET * y -15, 50);
+			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x - 4, PLACE_OUTSET * y -15, 70);
 		}
 	
 		sp[0] = Instantiate<SphereTarget>(this);
@@ -59,7 +59,7 @@ void Scenario1::Initialize()
 void Scenario1::Update()
 {
 	Player* pPlayer = (Player*)FindObject("Player");
-	pPlayer->PlayerMove();
+//	pPlayer->PlayerMove();
 	XMFLOAT3 PPos = pPlayer->GetPosition();
 	
 
@@ -107,7 +107,7 @@ void Scenario1::Update()
 
 void Scenario1::Draw()
 {
-	time_ -> Draw(30, 30, frame_ / 60);
+	time_ -> Text::Draw(30, 30, frame_ / 60);
 }
 
 void Scenario1::Release()

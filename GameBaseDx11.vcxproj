@@ -126,6 +126,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActionListener.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="DepthScenario.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -175,8 +176,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionListener.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="DepthScenario.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BillBoard.h" />

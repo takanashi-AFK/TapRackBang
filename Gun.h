@@ -7,10 +7,13 @@
 #include "SphereTarget.h"
 #include "Engine/RootObject.h"
 #include <list>
+#include "Engine/VFX.h"
+#include "AudioManager.h"
 class Gun:public GameObject
 {
 	int hRailGunModel_;
 	XMVECTOR sightLine_;
+	XMFLOAT3 hitPos;
 public:
 	Gun(GameObject* parent);
 	void Initialize()override;

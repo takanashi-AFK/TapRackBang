@@ -149,6 +149,7 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -274,6 +275,8 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="AudioManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

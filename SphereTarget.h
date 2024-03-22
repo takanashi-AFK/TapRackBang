@@ -6,6 +6,7 @@
     #include "Scenario1.h"
     #include "ActionListener.h"
     #include "Global.h"
+    #include "AudioManager.h"
 
     class Scenario1;
     class SphereTarget:public GameObject

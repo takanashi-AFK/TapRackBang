@@ -5,7 +5,7 @@
 #include "Gun.h"
 #include "Player.h"
 
-const float BULLET_SPEED{ 0.3f };
+const float BULLET_SPEED{ 5.f };
 class Bullet :public GameObject
 {
 public:

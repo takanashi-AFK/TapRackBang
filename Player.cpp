@@ -11,13 +11,13 @@ Player::Player(GameObject* parent)
 
 void Player::Initialize()
 {
-	speed = 0.1f;
+	speed = 0.5f;
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
 	transform_.position_.x = -2;
-	transform_.position_.y = 20;
-	transform_.position_.z = -10;
-	sensitivity = 0.2f;
+	transform_.position_.y = 0;
+	transform_.position_.z = 30;
+	sensitivity = 0.05;
 	Instantiate<Gun>(this);
 
 	hCrosshair_ = Image::Load("crossHair.png");
@@ -145,12 +145,9 @@ void Player::Update()
 	//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğŠp“x‚Æ‚µ‚Ä’~Ï‚·‚é
 	rotateAngle.x += Input::GetMouseMove().x * sensitivity;
 	rotateAngle.y += Input::GetMouseMove().y * sensitivity;
-	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
-
 	//const float upperlimit = -1.f;
 	//if (rotateAngle.y < upperlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
 
-	ImGui::Text("%f,%f", rotateAngle.x, rotateAngle.y);
 
 	XMFLOAT3 camTarget{};
 	XMFLOAT3 camPosition{};
@@ -188,9 +185,6 @@ void Player::Update()
 		XMStoreFloat3(&camTarget, originToCamTarget);
 		XMStoreFloat3(&camPosition, originToCamPosition);
 
-		ImGui::Text("Tx = %f,Ty = %f,Tz = %f", camTarget.x, camTarget.y, camTarget.z);
-		ImGui::Text("Px = %f,Py = %f,Pz = %f", camPosition.x, camPosition.y, camPosition.z);
-		ImGui::Text("tr x = %f,tr y = %f,tr z = %f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	}
 
 	/*X²‰ñ“]*/ {
@@ -224,12 +218,12 @@ void Player::Update()
 		XMStoreFloat3(&camTarget, originToCamTarget);
 		XMStoreFloat3(&camPosition, originToCamPosition);
 
-		ImGui::Text("%f,%f,%f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	}
 
 
 	Camera::SetTarget(camTarget);
 	Camera::SetPosition(camPosition);
+
 
 }
 

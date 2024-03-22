@@ -5,16 +5,20 @@
 #include "ImGuiManager.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
+#include "AudioManager.h"
 
 //テストシーンを管理するクラス
 class MenuScene : public GameObject
 {
 
-	int hScenario1Button_;
+	int hScenario1ButtonNormal_;
+	int hScenario1ButtonSelected_;
 	int hBackGround_;
 	Transform buttonTransform_;
 
 	XMFLOAT3 mousePos_;
+	XMFLOAT3 size;
+	bool isPushable;
 
 public:
 	//コンストラクタ
@@ -32,4 +36,6 @@ public:
 
 	//開放
 	void Release() override;
+
+	bool IsMouseInRect();
 };
