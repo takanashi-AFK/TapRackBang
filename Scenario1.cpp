@@ -50,21 +50,21 @@ void Scenario1::Initialize()
 	Instantiate<SimpleStage>(this);
 	Instantiate<Player>(this);
 
-
+	isStart = false;
 	speed = 0.1;
 	time_ = new Text;
 	time_->Initialize();
+	std::string count;
+
+		
+
 }
 
 void Scenario1::Update()
 {
 	Player* pPlayer = (Player*)FindObject("Player");
-//	pPlayer->PlayerMove();
+	//pPlayer->PlayerMove();
 	XMFLOAT3 PPos = pPlayer->GetPosition();
-	
-
-
-
 
 	ImGui::Begin("rueausu");
 	if (ImGui::Button("SceneChange")) {
@@ -74,27 +74,27 @@ void Scenario1::Update()
 	ImGui::End();
 
 	if (isTargetBroken) {
-		for (int i = 0; i < 3; i++)
-			if (brokenTargetPos.x == previousPos[i].x && brokenTargetPos.y == previousPos[i].y)
-				brokenTarget = i;
+			for (int i = 0; i < 3; i++)
+				if (brokenTargetPos.x == previousPos[i].x && brokenTargetPos.y == previousPos[i].y)
+					brokenTarget = i;
 
-		//‚à‚µ‚P‚ÆA‚Q‚Æd‚È‚Á‚Ä‚½‚ç
-		do {
-			xPos = rand() % PLACE_SIZE;
-			yPos = rand() % PLACE_SIZE;
-		} while (previousPos[0].x == targetPlace_[xPos][yPos].x &&
-			previousPos[0].y == targetPlace_[xPos][yPos].y ||
-			previousPos[1].x == targetPlace_[xPos][yPos].x &&
-			previousPos[1].y == targetPlace_[xPos][yPos].y ||
-			previousPos[2].x == targetPlace_[xPos][yPos].x &&
-			previousPos[2].y == targetPlace_[xPos][yPos].y );
+			//‚à‚µ‚P‚ÆA‚Q‚Æd‚È‚Á‚Ä‚½‚ç
+			do {
+				xPos = rand() % PLACE_SIZE;
+				yPos = rand() % PLACE_SIZE;
+			} while (previousPos[0].x == targetPlace_[xPos][yPos].x &&
+				previousPos[0].y == targetPlace_[xPos][yPos].y ||
+				previousPos[1].x == targetPlace_[xPos][yPos].x &&
+				previousPos[1].y == targetPlace_[xPos][yPos].y ||
+				previousPos[2].x == targetPlace_[xPos][yPos].x &&
+				previousPos[2].y == targetPlace_[xPos][yPos].y);
 
-		sp[brokenTarget] = Instantiate<SphereTarget>(this);
-		sp[brokenTarget]->SetPosition(targetPlace_[xPos][yPos]);
-		previousPos[brokenTarget] = targetPlace_[xPos][yPos];
+			sp[brokenTarget] = Instantiate<SphereTarget>(this);
+			sp[brokenTarget]->SetPosition(targetPlace_[xPos][yPos]);
+			previousPos[brokenTarget] = targetPlace_[xPos][yPos];
 
-		isTargetBroken = false;
-	}
+			isTargetBroken = false;
+		}
 
 	frame_++;
 
@@ -102,7 +102,6 @@ void Scenario1::Update()
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT, 0.5f);
 	}
-		
 }
 
 void Scenario1::Draw()

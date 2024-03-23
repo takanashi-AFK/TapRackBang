@@ -45,49 +45,51 @@ void Player::Update()
 	//////////////////////////////////////////////////
 
 	////////////////壁接触処理////////////////////////
-	/*右方向のレイキャスト*/ {
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.x =  MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.x -= speed;
+	{
+		/*右方向のレイキャスト*/ {
+			groundRayData.dist = 99999.f;
+			groundRayData.start = transform_.position_;
+			groundRayData.start.x = MODEL_SIZE / 2;
+			groundRayData.dir = XMFLOAT3(1, 0, 0);
+			Model::RayCast(hGroundModelHandle_, &groundRayData);
+			if (groundRayData.hit && groundRayData.dist < speed) {
+				transform_.position_.x -= speed;
+			}
 		}
-	}
 
-	/*左方向のレイキャスト*/ {
+		/*左方向のレイキャスト*/ {
 
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.x = MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(-1, 0, 0);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.x += speed;
+			groundRayData.dist = 99999.f;
+			groundRayData.start = transform_.position_;
+			groundRayData.start.x = MODEL_SIZE / 2;
+			groundRayData.dir = XMFLOAT3(-1, 0, 0);
+			Model::RayCast(hGroundModelHandle_, &groundRayData);
+			if (groundRayData.hit && groundRayData.dist < speed) {
+				transform_.position_.x += speed;
+			}
 		}
-	}
 
-	/*奥方向のレイキャスト*/ {
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.z = MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, 1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.z -= speed;
+		/*奥方向のレイキャスト*/ {
+			groundRayData.dist = 99999.f;
+			groundRayData.start = transform_.position_;
+			groundRayData.start.z = MODEL_SIZE / 2;
+			groundRayData.dir = XMFLOAT3(0, 0, 1);
+			Model::RayCast(hGroundModelHandle_, &groundRayData);
+			if (groundRayData.hit && groundRayData.dist < speed) {
+				transform_.position_.z -= speed;
+			}
 		}
-	}
 
-	/*手前方向のレイキャスト*/ {
-		// Z軸負方向のレイキャスト
-		groundRayData.dist = 99999.f;
-		groundRayData.start = transform_.position_;
-		groundRayData.start.z =  MODEL_SIZE / 2;
-		groundRayData.dir = XMFLOAT3(0, 0, -1);
-		Model::RayCast(hGroundModelHandle_, &groundRayData);
-		if (groundRayData.hit && groundRayData.dist < speed) {
-			transform_.position_.z += speed;
+		/*手前方向のレイキャスト*/ {
+			// Z軸負方向のレイキャスト
+			groundRayData.dist = 99999.f;
+			groundRayData.start = transform_.position_;
+			groundRayData.start.z = MODEL_SIZE / 2;
+			groundRayData.dir = XMFLOAT3(0, 0, -1);
+			Model::RayCast(hGroundModelHandle_, &groundRayData);
+			if (groundRayData.hit && groundRayData.dist < speed) {
+				transform_.position_.z += speed;
+			}
 		}
 	}
 	

@@ -1,2 +1,4 @@
 当たり判定の配置を軽量化するために、ﾚｲではなくコライダーを用いた判定方式を導入する
 Targetクラスを継承したhumanTargetとsphereCollider
+撃つと一定の確率でジャムってQTEが発生する
+int型のframeって変数をGameObjectに持ってしまってもいいかも

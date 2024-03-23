@@ -26,6 +26,7 @@ class Scenario1 : public GameObject,public ActionListener {
     SphereTarget* sp[3];
     int xPos, yPos;
     bool isTargetBroken;
+    bool isStart;
     XMFLOAT3 brokenTargetPos;
     int brokenTarget;
     Text* time_;

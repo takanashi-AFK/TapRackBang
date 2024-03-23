@@ -18,9 +18,7 @@
         bool isBroken;
     
     public:
-	    SphereTarget(GameObject* parent);
-  
-
+        SphereTarget(GameObject* parent);
         void Initialize()override;
         void Update()override;
         void Draw()override;

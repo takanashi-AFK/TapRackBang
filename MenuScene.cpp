@@ -82,7 +82,7 @@ void MenuScene::Release()
 
 bool MenuScene::IsMouseInRect()
 {
-	if (mousePos_.x > 800 && mousePos_.x < 1100 && mousePos_.y > 560 && mousePos_.y < 660)
+	if (mousePos_.x > 840 && mousePos_.x < 1080 && mousePos_.y > 550 && mousePos_.y < 675)
 		return true;
 
 	return false;
