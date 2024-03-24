@@ -34,7 +34,7 @@ void MenuUI::Update()
 	if (isPushable && Input::IsMouseButtonDown(0)) {
 		AudioManager::PlayConfirmSound();
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);
+		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 1.f);
 	}
 }
 

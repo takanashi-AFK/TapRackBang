@@ -33,4 +33,5 @@ void ResultScene::Draw()
 
 void ResultScene::Release()
 {
+	g_Point = 0;
 }

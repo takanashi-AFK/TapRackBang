@@ -36,7 +36,7 @@ void TitleScene::Update()
 	if (Input::IsKeyDown(DIK_SPACE)) {
 		AudioManager::PlayConfirmSound();
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);
+		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 1.f);
 }
 		
 	if (increasing) {
