@@ -66,6 +66,7 @@ void Scenario1::Update()
 	//pPlayer->PlayerMove();
 	XMFLOAT3 PPos = pPlayer->GetPosition();
 
+#ifdef _DEBUG
 	ImGui::Begin("rueausu");
 	if (ImGui::Button("SceneChange")) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
@@ -73,6 +74,9 @@ void Scenario1::Update()
 	}
 	ImGui::End();
 
+#endif // _DEBUG
+
+	
 	if (isTargetBroken) {
 			for (int i = 0; i < 3; i++)
 				if (brokenTargetPos.x == previousPos[i].x && brokenTargetPos.y == previousPos[i].y)

@@ -22,6 +22,7 @@ void Player::Initialize()
 
 	hCrosshair_ = Image::Load("crossHair.png");
 	assert(hCrosshair_ >= 0);
+	isCamMove = true;
 }
 
 void Player::Update()
@@ -161,72 +162,72 @@ void Player::Update()
 		const float lowerlimit = 50.f;
 		if (rotateAngle.y > lowerlimit)rotateAngle.y -= Input::GetMouseMove().y * sensitivity;
 	
+		if (isCamMove) {
+			/*Y軸回転*/ {
+				const float distance{ 10.f };
+				//実際には仮のベクトルで、playerToCamTargetではない、いい変数名を探そう
+				XMVECTOR playerToCamTarget{ 0.f,0.f,1.f,0.f };
+				//Y軸で回る回転行列を作成、playerToCamTargetを回転させる
+				XMMATRIX rotY = XMMatrixRotationY(XMConvertToRadians(rotateAngle.x));
+				playerToCamTarget = XMVector3Transform(playerToCamTarget, rotY);
+				playerToCamTarget *= distance;
 
-	/*Y軸回転*/ {
-		const float distance{ 10.f };
-		//実際には仮のベクトルで、playerToCamTargetではない、いい変数名を探そう
-		XMVECTOR playerToCamTarget{ 0.f,0.f,1.f,0.f };
-		//Y軸で回る回転行列を作成、playerToCamTargetを回転させる
-		XMMATRIX rotY = XMMatrixRotationY(XMConvertToRadians(rotateAngle.x));
-		playerToCamTarget = XMVector3Transform(playerToCamTarget, rotY);
-		playerToCamTarget *= distance;
+				//原点からplayerPosに向かうベクトル
+				XMVECTOR originToPlayer = XMLoadFloat3(&center);
+				//原点からCamTargetに向かうベクトル
+				XMVECTOR originToCamTarget = playerToCamTarget + originToPlayer;
 
-		//原点からplayerPosに向かうベクトル
-		XMVECTOR originToPlayer = XMLoadFloat3(&center);
-		//原点からCamTargetに向かうベクトル
-		XMVECTOR originToCamTarget = playerToCamTarget + originToPlayer;
+				//プレイヤーからターゲットに向かう方向ベクトルの逆ベクトルをとり、
+				//プレイヤーからポジションへのベクトルを生成、回転
+				XMVECTOR playerToCamPosition = -playerToCamTarget;
+				playerToCamPosition = XMVector3Transform(playerToCamPosition, XMMatrixRotationY(XMConvertToRadians(-30)));
 
-		//プレイヤーからターゲットに向かう方向ベクトルの逆ベクトルをとり、
-		//プレイヤーからポジションへのベクトルを生成、回転
-		XMVECTOR playerToCamPosition = -playerToCamTarget;
-		playerToCamPosition = XMVector3Transform(playerToCamPosition, XMMatrixRotationY(XMConvertToRadians(-30)));
+				XMVECTOR originToCamPosition = originToPlayer + playerToCamPosition;
 
-		XMVECTOR originToCamPosition = originToPlayer + playerToCamPosition;
+				//カメラのターゲットを作成
+				XMStoreFloat3(&camTarget, originToCamTarget);
+				XMStoreFloat3(&camPosition, originToCamPosition);
 
-		//カメラのターゲットを作成
-		XMStoreFloat3(&camTarget, originToCamTarget);
-		XMStoreFloat3(&camPosition, originToCamPosition);
+			}
 
-	}
+			/*X軸回転*/ {
 
-	/*X軸回転*/ {
-		
-		// 新しい中心点を作成
-		XMFLOAT3 newCenter{};
-		XMStoreFloat3(&newCenter, (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f);
+				// 新しい中心点を作成
+				XMFLOAT3 newCenter{};
+				XMStoreFloat3(&newCenter, (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f);
 
-		debT.position_ = newCenter;
-		
-		// 回転の軸を作成
-		XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&center));
+				debT.position_ = newCenter;
 
-		// 回転行列を作成
-		XMMATRIX rotAxisMat = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
+				// 回転の軸を作成
+				XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&center));
 
-		// 回転させるベクトルを用意
-		XMVECTOR newCenterToCamTarget = XMLoadFloat3(&camTarget) - XMLoadFloat3(&newCenter);
+				// 回転行列を作成
+				XMMATRIX rotAxisMat = XMMatrixRotationAxis(rotateAxis, XMConvertToRadians(rotateAngle.y));
 
-		// 回転させる
-		newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotAxisMat);
+				// 回転させるベクトルを用意
+				XMVECTOR newCenterToCamTarget = XMLoadFloat3(&camTarget) - XMLoadFloat3(&newCenter);
 
-		// 逆ベクトルを作成
-		XMVECTOR newCenterToCamPosition = -newCenterToCamTarget;
+				// 回転させる
+				newCenterToCamTarget = XMVector3Transform(newCenterToCamTarget, rotAxisMat);
 
-		// 原点からのベクトルを作成
-		XMVECTOR originToCamTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
-		XMVECTOR originToCamPosition = XMLoadFloat3(&newCenter) + newCenterToCamPosition;
+				// 逆ベクトルを作成
+				XMVECTOR newCenterToCamPosition = -newCenterToCamTarget;
 
-
-		XMStoreFloat3(&camTarget, originToCamTarget);
-		XMStoreFloat3(&camPosition, originToCamPosition);
-
-	}
+				// 原点からのベクトルを作成
+				XMVECTOR originToCamTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
+				XMVECTOR originToCamPosition = XMLoadFloat3(&newCenter) + newCenterToCamPosition;
 
 
-	Camera::SetTarget(camTarget);
-	Camera::SetPosition(camPosition);
+				XMStoreFloat3(&camTarget, originToCamTarget);
+				XMStoreFloat3(&camPosition, originToCamPosition);
+
+			}
 
 
+			Camera::SetTarget(camTarget);
+			Camera::SetPosition(camPosition);
+
+		}
 }
 
 void Player::Draw()
@@ -246,39 +247,7 @@ void Player::Release()
 
 void Player::PlayerMove()
 {
-	////ここのベクトル一つにまとめられるんだったらまとめてしまいたい
-	//vMoveX_ = { speed,0.0f,0.0f,0.0f };
-	//vMoveZ_ = { 0.0f,0.0f,speed,0.0f };
-	//
-
-	//vPlayerPos_ = XMLoadFloat3(&transform_.position_);
-	//XMMATRIX rotateMatY = XMMatrixRotationY(XMConvertToRadians(transform_.rotate_.y));
-
-	//vMoveX_ = XMVector3TransformCoord(vMoveX_, rotateMatY);
-	//vMoveZ_ = XMVector3TransformCoord(vMoveZ_, rotateMatY);
-
-	//if (Input::IsKey(DIK_W)) {
-	//	XMVector3Normalize(vMoveZ_);
-	//	vPlayerPos_ += vMoveZ_;
-
-	//}
-
-	//if (Input::IsKey(DIK_A)) {
-	//	XMVector3Normalize(vMoveX_);
-	//	vPlayerPos_ -= vMoveX_;
-	//}
-
-	//if (Input::IsKey(DIK_S)) {
-	//	XMVector3Normalize(vMoveZ_);
-	//	vPlayerPos_ -= vMoveZ_;
-	//}
-
-	//if (Input::IsKey(DIK_D)) {
-	//	XMVector3Normalize(vMoveX_);
-	//	vPlayerPos_ += vMoveX_;
-	//}
-	//XMVector3Normalize(vPlayerPos_);
-	//XMStoreFloat3(&transform_.position_, vPlayerPos_);
+	
 	XMVECTOR dir{};
 	XMVECTOR sightLine = Camera::GetSightLine();
 	sightLine = XMVectorSetY(sightLine, 0);
@@ -308,6 +277,11 @@ void Player::PlayerMove()
 	XMVECTOR move = dir * speed;
 
 	XMStoreFloat3(&transform_.position_, XMLoadFloat3(&transform_.position_) + move);
+}
+
+void Player::SetCanCamMove(bool can)
+{
+	isCamMove = can;
 }
 
 XMVECTOR Player::GetForwardVector()

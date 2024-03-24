@@ -17,6 +17,7 @@ class TitleScene : public GameObject
 	int opacity;
 	int alpha;
 	bool increasing;
+	Text* ptext;
 
 public:
 	//コンストラクタ

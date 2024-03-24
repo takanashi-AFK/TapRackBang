@@ -16,6 +16,7 @@ void PlayScene::Initialize()
 //XV
 void PlayScene::Update()
 {
+#ifdef _DEBUG
 	ImGui::Begin("rueausu");
 	ImGui::Text("Play");
 	if (ImGui::Button("toMenu")) {
@@ -27,6 +28,9 @@ void PlayScene::Update()
 		pSceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
+#endif // DEBUG
+
+	
 }
 
 

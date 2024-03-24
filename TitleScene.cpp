@@ -18,23 +18,26 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-
+#ifdef _DEBUG
 	ImGui::Begin("rueausu");
 	ImGui::Text("Title");
 	if (ImGui::Button("SceneChange")) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_MENU,TID_BLACKOUT, 0.5f);
+		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
 
-	if (Input::IsKeyDown(DIK_SPACE)){
+	
+	ImGui::Text("x = %f,y = %f", mousePos_.x, mousePos_.y);
+
+#endif // _DEBUG
+
+
+	if (Input::IsKeyDown(DIK_SPACE)) {
 		AudioManager::PlayConfirmSound();
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);
-	}
-	ImGui::Text("x = %f,y = %f", mousePos_.x, mousePos_.y);
-
-	
+}
 		
 	if (increasing) {
 		opacity+=5;
@@ -55,13 +58,6 @@ void TitleScene::Draw()
 
 	Image::SetTransform(pressSpaceKey, uiTransform);
 	Image::Draw(pressSpaceKey);
-
-	
-
-	
-
-		
-
 }
 
 void TitleScene::Release()

@@ -15,8 +15,12 @@ class Player :
 public:
     int hPlayerModel_;
     int hCrosshair_;
+
     float speed;
     float sensitivity;
+
+    bool isCamMove;
+
     XMFLOAT2 rotateAngle_;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
@@ -34,6 +38,7 @@ public:
     void Release()override;
 
     void PlayerMove();
+    void SetCanCamMove(bool can);
     XMVECTOR GetForwardVector();
 };
 

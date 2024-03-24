@@ -19,14 +19,22 @@ void SplashScene::Initialize()
 void SplashScene::Update()
 {
 	static int frame;
+
+#ifdef _DEBUG
 	ImGui::Begin("rueausu");
 	ImGui::Text("Splash");
 
-	if(ImGui::Button("SceneChange") || frame >120) {
+	if (ImGui::Button("SceneChange") || frame > 120) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT, 0.5f);
 	}
 	ImGui::End();
+#endif // _DEBUG
+
+	if (frame > 120) {
+		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
+		pSceneManager->ChangeScene(SCENE_ID_TITLE, TID_BLACKOUT, 0.5f);
+	}
 	Image::SetAlpha(hSplash_, frame*10);
 	frame++;
 

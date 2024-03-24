@@ -128,6 +128,7 @@
     <ClCompile Include="ActionListener.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="MenuUI.cpp" />
     <ClCompile Include="DepthScenario.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="ActionListener.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="MenuUI.h" />
     <ClInclude Include="DepthScenario.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />

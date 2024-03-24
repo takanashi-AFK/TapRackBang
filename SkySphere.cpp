@@ -12,6 +12,7 @@ void SkySphere::Initialize()
 
 void SkySphere::Update()
 {
+#ifdef _DEBUG
 	ImGui::Begin("rueausu");
 
 	if (ImGui::CollapsingHeader("position_")) {
@@ -47,6 +48,9 @@ void SkySphere::Update()
 		}
 	}
 	ImGui::End();
+#endif // _DEBUG
+
+	
 }
 
 void SkySphere::Draw()

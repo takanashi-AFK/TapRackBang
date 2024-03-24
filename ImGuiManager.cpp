@@ -24,6 +24,7 @@ bool ImGuiManager::DrawStart()
 
 void ImGuiManager::Feature()
 {
+#ifdef _DEBUG
 	ImGui::Begin("Hello, world!");//ImGuiの処理を開始
 	{
 		//この中にしたい処理を記述
@@ -32,11 +33,17 @@ void ImGuiManager::Feature()
 			PostQuitMessage(0);	//プログラム終了
 		}
 	}
+#endif // _DEBUG
+
+	
 }
 
 bool ImGuiManager::DrawEnd()
 {
+#ifdef _DEBUG
 	ImGui::End();//ImGuiの処理を終了
+#endif // _DEBUG
+
 	//ImGuiの描画処理
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

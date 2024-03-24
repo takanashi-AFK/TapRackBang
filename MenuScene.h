@@ -1,24 +1,26 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/SceneManager.h"
-#include "Engine/Text.h"
-#include "ImGuiManager.h"
 #include "Engine/Image.h"
 #include "Engine/Input.h"
+#include "Engine/Camera.h"
 #include "AudioManager.h"
+#include "Player.h"
+#include "SimpleStage.h"
+#include "MenuUI.h"
 
 //テストシーンを管理するクラス
 class MenuScene : public GameObject
 {
-
-	int hScenario1ButtonNormal_;
-	int hScenario1ButtonSelected_;
 	int hBackGround_;
-	Transform buttonTransform_;
+	int titleImage;
+	int frame;
 
-	XMFLOAT3 mousePos_;
-	XMFLOAT3 size;
-	bool isPushable;
+	Player* pPlayer;
+	XMFLOAT3 pos;
+
+	XMFLOAT3 campos;
+	XMFLOAT3 target;
 
 public:
 	//コンストラクタ
@@ -36,6 +38,4 @@ public:
 
 	//開放
 	void Release() override;
-
-	bool IsMouseInRect();
 };

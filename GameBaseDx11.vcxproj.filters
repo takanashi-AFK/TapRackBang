@@ -154,6 +154,7 @@
     <ClCompile Include="ResultScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="MenuUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -285,6 +286,7 @@
     <ClInclude Include="ResultScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="MenuUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

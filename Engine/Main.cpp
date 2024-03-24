@@ -257,6 +257,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE) {
+
+		PostQuitMessage(0);
+		return 0;
+		}
 	}
 	//ImGuiÇ…èÓïÒÇìnÇ∑
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
