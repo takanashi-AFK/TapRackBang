@@ -37,7 +37,8 @@ const char* WIN_CLASS_NAME = "SampleGame";	//ウィンドウクラス名
 //プロトタイプ宣言
 HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdShow);
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
+void ToggleFullScreen(HWND hWnd, int screenWidth, int screenHeight);
+bool g_isFullScreen = false;
 
 // エントリーポイント
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -131,6 +132,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				//入力（キーボード、マウス、コントローラー）情報を更新
 				Input::Update();
 
+
+				// フルスクリーンモードとウィンドウモードを切り替える
+				if (Input::IsKeyDown(DIK_P)) {
+					ToggleFullScreen(hWnd, screenWidth, screenHeight);
+				}
+
 				//カメラを更新
 				Camera::Update();
 
@@ -208,7 +215,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 
 	//ウィンドウサイズの計算
 	RECT winRect = { 0, 0, screenWidth, screenHeight };
-	AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+	AdjustWindowRect(&winRect, WS_POPUP, FALSE);
 
 	//タイトルバーに表示する内容
 	char caption[64];
@@ -218,7 +225,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 	HWND hWnd = CreateWindow(
 		WIN_CLASS_NAME,					//ウィンドウクラス名
 		caption,						//タイトルバーに表示する内容
-		WS_OVERLAPPEDWINDOW,			//スタイル（普通のウィンドウ）
+		WS_POPUP,			//スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,					//表示位置左（おまかせ）
 		CW_USEDEFAULT,					//表示位置上（おまかせ）
 		winRect.right - winRect.left,	//ウィンドウ幅
@@ -227,7 +234,7 @@ HWND InitApp(HINSTANCE hInstance, int screenWidth, int screenHeight, int nCmdSho
 		nullptr,						//メニュー（なし）
 		hInstance,						//インスタンス
 		nullptr							//パラメータ（なし）
-	);
+	);	
 
 	//ウィンドウを表示
 	ShowWindow(hWnd, nCmdShow);
@@ -250,10 +257,45 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE) {
+
+		PostQuitMessage(0);
+		return 0;
+		}
 	}
 	//ImGuiに情報を渡す
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+// フルスクリーンモードとウィンドウモードを切り替える関数
+void ToggleFullScreen(HWND hWnd, int screenWidth, int screenHeight)
+{
+	g_isFullScreen = !g_isFullScreen;
+
+	if (g_isFullScreen) {
+		// フルスクリーンモードに切り替える
+		SetWindowLong(hWnd, GWL_STYLE, WS_POPUP);
+		SetWindowLong(hWnd, GWL_EXSTYLE, GetWindowLong(hWnd, GWL_EXSTYLE) | WS_EX_TOPMOST);
+		ShowWindow(hWnd, SW_MAXIMIZE);
+		SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, GetSystemMetrics(SM_CXMAXIMIZED), GetSystemMetrics(SM_CYMAXIMIZED), SWP_FRAMECHANGED);
+		ShowCursor(true);
+	}
+	else {
+  DWORD dwStyle = WS_OVERLAPPEDWINDOW | WS_VISIBLE;
+        DWORD dwExStyle = WS_EX_OVERLAPPEDWINDOW;
+
+        // タイトルバーの高さを考慮してウィンドウのサイズを再設定
+        RECT winRect = { 0, 0, screenWidth, screenHeight };
+        AdjustWindowRect(&winRect, WS_OVERLAPPEDWINDOW, FALSE);
+
+        SetWindowLong(hWnd, GWL_STYLE, dwStyle);
+        SetWindowLong(hWnd, GWL_EXSTYLE, dwExStyle);
+        SetWindowPos(hWnd, HWND_NOTOPMOST, 0, 0, winRect.right - winRect.left, winRect.bottom - winRect.top, SWP_FRAMECHANGED);
+
+        ShowCursor(true);
+	}
 }

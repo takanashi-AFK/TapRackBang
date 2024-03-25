@@ -1,12 +1,27 @@
 #pragma once
 #include "Engine/GameObject.h"
 #include "Engine/SceneManager.h"
-#include "Engine/Text.h"
-#include "ImGuiManager.h"
+#include "Engine/Image.h"
+#include "Engine/Input.h"
+#include "Engine/Camera.h"
+#include "AudioManager.h"
+#include "Player.h"
+#include "SimpleStage.h"
+#include "MenuUI.h"
 
 //テストシーンを管理するクラス
 class MenuScene : public GameObject
 {
+	int hBackGround_;
+	int titleImage;
+	int frame;
+
+	Player* pPlayer;
+	XMFLOAT3 pos;
+
+	XMFLOAT3 campos;
+	XMFLOAT3 target;
+
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

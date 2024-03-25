@@ -1,35 +1,43 @@
 #include "MenuScene.h"
 
 MenuScene::MenuScene(GameObject* parent)
-	: GameObject(parent, "PlayScene")
+	: GameObject(parent, "PlayScene"),
+	hBackGround_(-1)
 {
 }
 
 void MenuScene::Initialize()
 {
+	pPlayer = Instantiate<Player>(this);
+	Instantiate<SimpleStage>(this);
+	Instantiate<MenuUI>(this);
+
+	hBackGround_ = Image::Load("MenuImage/menu.png");
+	assert(hBackGround_ >= 0);	
+	
+	
+	pos = pPlayer->GetPosition();
+	
 }
 
 void MenuScene::Update()
 {
-	ImGui::Begin("rueausu");
-	ImGui::Text("menu");
+	if (frame >= 5)
+		pPlayer->SetCanCamMove(false);
 
-	if (ImGui::Button("ToPlay")) {
+	if (Input::IsKeyDown(DIK_D)) {
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_PLAY, TID_BLACKOUT, 0.5f);
+		pSceneManager->ChangeScene(SCENE_ID_DEPTH, TID_BLACKOUT, 1.f);
 	}
-	
-	if (ImGui::Button("ToScenario1")) {
-		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 0.5f);
-	}
-	ImGui::End();
+	frame++;
 }
 
 void MenuScene::Draw()
 {
+	
 }
 
 void MenuScene::Release()
 {
 }
+

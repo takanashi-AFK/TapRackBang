@@ -1,0 +1,3 @@
+弾ヒット時エフェクトの元データは
+—Pngtree—fire spark spray light effect_6300256.png
+だが、仕様文字（おそらくハイフン？）に問題があるため変更

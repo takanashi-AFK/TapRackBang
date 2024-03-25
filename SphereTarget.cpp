@@ -1,6 +1,7 @@
 #include "SphereTarget.h"
 
-SphereTarget::SphereTarget(GameObject* parent)
+SphereTarget::SphereTarget(GameObject* parent):
+	GameObject(parent,"SphereTarget")
 {
 }
 
@@ -48,7 +49,7 @@ void SphereTarget::Initialize()
 		//	SphereCollider* collision = new SphereCollider(t[2].targetTrans.position_, 1.2f);
 		//	AddCollider(collision);
 	}
-	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 1.2f);
+	SphereCollider* collision = new SphereCollider(XMFLOAT3(0, 0, 0), 1.f);
 	AddCollider(collision);
 }
 
@@ -69,15 +70,26 @@ void SphereTarget::Release()
 
 void SphereTarget::OnCollision(GameObject* pTarget)
 {
-	
+	Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
 	//弾に当たったとき
 	if (pTarget->GetObjectName() == "Bullet"){
-		Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
+	
 		KillMe();
-		sc1->NotifyBreakTarget();
 		pTarget->KillMe();
+		NotifyTargetDestroy(sc1);
+		g_Point += 1;
 	}
 }
 
-//スフィアターゲットクラスで弾が当たったよってなったら、オブザーバーパターン
-//のメソッドでScenaario1に対して通知を行い、再生成
+void SphereTarget::NotifyTargetDestroy(Scenario1* sc)
+{
+	AudioManager::PlayKillSound();
+	pos = transform_.position_;
+	sc->onAction(pos);
+}
+
+XMFLOAT3 SphereTarget::ReturnBreakPos()
+{
+	return transform_.position_;
+}
+

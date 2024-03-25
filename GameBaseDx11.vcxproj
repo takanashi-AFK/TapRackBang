@@ -126,7 +126,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActionListener.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="MenuUI.cpp" />
+    <ClCompile Include="DepthScenario.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Engine\Audio.cpp" />
     <ClCompile Include="Engine\BillBoard.cpp" />
     <ClCompile Include="Engine\BoxCollider.cpp" />
@@ -156,11 +160,13 @@
     <ClCompile Include="Engine\Text.cpp" />
     <ClCompile Include="Engine\Texture.cpp" />
     <ClCompile Include="Engine\Transform.cpp" />
+    <ClCompile Include="Global.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="MenuScene.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="ResultScene.cpp" />
     <ClCompile Include="Scenario1.cpp" />
     <ClCompile Include="SimpleStage.cpp" />
     <ClCompile Include="SkySphere.cpp" />
@@ -171,7 +177,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionListener.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="MenuUI.h" />
+    <ClInclude Include="DepthScenario.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Engine\Audio.h" />
     <ClInclude Include="Engine\BillBoard.h" />
     <ClInclude Include="Engine\BoxCollider.h" />
@@ -203,11 +214,13 @@
     <ClInclude Include="Engine\Text.h" />
     <ClInclude Include="Engine\Texture.h" />
     <ClInclude Include="Engine\Transform.h" />
+    <ClInclude Include="Global.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="ResultScene.h" />
     <ClInclude Include="Scenario1.h" />
     <ClInclude Include="SimpleStage.h" />
     <ClInclude Include="SkySphere.h" />

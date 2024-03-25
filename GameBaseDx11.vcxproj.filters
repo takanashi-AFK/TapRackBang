@@ -119,7 +119,6 @@
     <ClCompile Include="Engine\ImGui\imgui.cpp">
       <Filter>01Engine\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="ImGuiManager.cpp" />
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="MenuScene.cpp">
@@ -143,6 +142,19 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="ActionListener.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="DepthScenario.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="ImGuiManager.cpp">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BoxCollider.h">
@@ -238,7 +250,6 @@
     <ClInclude Include="Engine\ImGui\imconfig.h">
       <Filter>01Engine\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="ImGuiManager.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="SkySphere.h" />
     <ClInclude Include="MenuScene.h">
@@ -262,6 +273,20 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="ActionListener.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="DepthScenario.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="ImGuiManager.h">
+      <Filter>01Engine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Assets\Shader\Simple2D.hlsl">

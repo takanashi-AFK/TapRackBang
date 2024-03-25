@@ -4,11 +4,21 @@
 #include "Engine/SceneManager.h"
 #include "Engine/Text.h"
 #include "ImGuiManager.h"
-
+#include "Engine/Input.h"
+#include "AudioManager.h"
 
 //テストシーンを管理するクラス
 class TitleScene : public GameObject
 {
+	XMFLOAT3 mousePos_;
+	Transform uiTransform;
+	int hBackGround_;
+	int pressSpaceKey;
+	int opacity;
+	int alpha;
+	bool increasing;
+	Text* ptext;
+
 public:
 	//コンストラクタ
 	//引数：parent  親オブジェクト（SceneManager）

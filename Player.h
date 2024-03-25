@@ -3,33 +3,34 @@
 #include "Engine/Model.h"
 #include "Engine/Input.h"
 #include "SimpleStage.h"
+#include "Engine/Image.h"
 #include "Engine/SceneManager.h"
 #include "Engine/Camera.h"
 #include "ImGuiManager.h"
 #include "Gun.h"
-
+const float MODEL_SIZE{ 1 };
 class Player :
     public GameObject
 {
 public:
     int hPlayerModel_;
+    int hCrosshair_;
+
     float speed;
     float sensitivity;
+
+    bool isCamMove;
+
+    XMFLOAT2 rotateAngle_;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
-    XMFLOAT3 mouseMove_;
-    XMVECTOR upLimit;
-    XMVECTOR verticalP;
+    Transform debT;
 
     XMVECTOR playerForward;
-
-    float playerCameraDistance;
-
     SceneManager* pSM;
-    int hGroundModelHandle_;
+    XMFLOAT3 newCenter_;
 
-    Player();
     Player(GameObject* parent);
     void Initialize()override;
     void Update()override;
@@ -37,6 +38,7 @@ public:
     void Release()override;
 
     void PlayerMove();
+    void SetCanCamMove(bool can);
     XMVECTOR GetForwardVector();
 };
 
