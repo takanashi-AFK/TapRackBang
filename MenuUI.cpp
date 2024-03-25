@@ -36,6 +36,8 @@ void MenuUI::Update()
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 1.f);
 	}
+
+	ImGui::Text("%f,%f,%f", mousePos_.x, mousePos_.y, mousePos_.z);
 }
 
 void MenuUI::Draw()
@@ -60,7 +62,7 @@ void MenuUI::Release()
 
 bool MenuUI::IsMouseInRect()
 {
-	if (mousePos_.x > 840 && mousePos_.x < 1080 && mousePos_.y > 550 && mousePos_.y < 675)
+	if (mousePos_.x > 1010 && mousePos_.x < 1320 && mousePos_.y > 670 && mousePos_.y < 830)
 		return true;
 
 	return false;
