@@ -27,29 +27,9 @@ void Gun::Update()
 
 	if (Input::IsMouseButtonDown(0) ){
 	
-		RayCastData shotRay;
-		shotRay.start = Camera::GetPosition();
-		XMFLOAT3 CamTar = Camera::GetTarget();
-		XMVECTOR vCamTarget = XMLoadFloat3(&CamTar);
-
-		XMStoreFloat3(&shotRay.dir , sightLine);
-		Model::RayCast(pStageHandle, &shotRay);
-
-		XMVECTOR  vHitPos = XMLoadFloat3(&shotRay.start) + XMLoadFloat3(&shotRay.dir) * shotRay.dist;
-		vHitPos = vHitPos - vPPos;
-		hitPos; XMStoreFloat3(&hitPos, vHitPos);
-
-		EmitterData bulletHitPos;
-		bulletHitPos.textureFileName = "EffectAssets/BulletHit.png";
-		bulletHitPos.position = { hitPos.x-1,hitPos.y-17,hitPos.z = 69 };//‘Ã‹¦
-
-		bulletHitPos.direction = { 0,0,0 };
-		bulletHitPos.delay =  0;
-		bulletHitPos.scale = { 1, 1 };
-		VFX::Start(bulletHitPos);
 		AudioManager::PlayGunSound();
 		Bullet* pBullet = Instantiate<Bullet>(GetParent()->GetParent());
-		pBullet->Shot(pPlayer->GetPosition(), -vHitPos);
+		pBullet->Shot(Camera::GetPosition(), -sightLine);
 	}	
 }
 

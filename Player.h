@@ -15,7 +15,7 @@ class Player :
 public:
     int hPlayerModel_;
     int hCrosshair_;
-
+   
     float speed;
     float sensitivity;
 

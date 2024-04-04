@@ -224,6 +224,9 @@ void Player::Update()
 			}
 
 
+			transform_.rotate_.x = rotateAngle.y;
+			transform_.rotate_.y = rotateAngle.x;
+
 			Camera::SetTarget(camTarget);
 			Camera::SetPosition(camPosition);
 
