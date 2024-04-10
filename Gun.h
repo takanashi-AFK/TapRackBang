@@ -12,16 +12,13 @@
 class Gun:public GameObject
 {
 	int hRailGunModel_;
-	XMVECTOR sightLine_;
-	XMFLOAT3 hitPos;
+
 public:
 	Gun(GameObject* parent);
 	void Initialize()override;
 	void Update()override;
 	void Draw()override;
 	void Release()override;
-	void GunShot(XMFLOAT3 pos);
-
 
 	enum GunKinds {
 		GUN_HANDGUN,

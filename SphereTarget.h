@@ -7,6 +7,7 @@
     #include "ActionListener.h"
     #include "Global.h"
     #include "AudioManager.h"
+#include <array>
 
     class Scenario1;
     class SphereTarget:public GameObject
@@ -16,7 +17,10 @@
         int xPos, yPos;
         XMFLOAT3 pos;
         bool isBroken;
-    
+        SphereTarget* sp[3];
+        XMFLOAT3 targetPlace_[4][4];
+        std::array<XMFLOAT3, 3> previousPos;
+
     public:
         SphereTarget(GameObject* parent);
         void Initialize()override;

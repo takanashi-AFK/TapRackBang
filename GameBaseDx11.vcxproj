@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
-    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\include</IncludePath>
+    <LibraryPath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.3.7\lib\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include</IncludePath>
@@ -172,6 +172,7 @@
     <ClCompile Include="SkySphere.cpp" />
     <ClCompile Include="SphereTarget.cpp" />
     <ClCompile Include="SplashScene.cpp" />
+    <ClCompile Include="TargetManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Transition.cpp" />
   </ItemGroup>
@@ -226,6 +227,7 @@
     <ClInclude Include="SkySphere.h" />
     <ClInclude Include="SphereTarget.h" />
     <ClInclude Include="SplashScene.h" />
+    <ClInclude Include="TargetManager.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Transition.h" />
   </ItemGroup>

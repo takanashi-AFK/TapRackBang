@@ -36,8 +36,6 @@ void MenuUI::Update()
 		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
 		pSceneManager->ChangeScene(SCENE_ID_SCENARIO1, TID_BLACKOUT, 1.f);
 	}
-
-	//ImGui::Text("%f,%f,%f", mousePos_.x, mousePos_.y, mousePos_.z);
 }
 
 void MenuUI::Draw()

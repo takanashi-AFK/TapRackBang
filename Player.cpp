@@ -11,14 +11,12 @@ Player::Player(GameObject* parent)
 
 void Player::Initialize()
 {
+	Instantiate<Gun>(this);
+
 	speed = 0.5f;
 	hPlayerModel_ = Model::Load("TestBird.fbx");
 	pSM=(SceneManager*)FindObject("SceneManager");
-	transform_.position_.x = -2;
-	transform_.position_.y = 0;
-	transform_.position_.z = 30;
 	sensitivity = 0.05;
-	Instantiate<Gun>(this);
 
 	hCrosshair_ = Image::Load("crossHair.png");
 	assert(hCrosshair_ >= 0);
@@ -34,7 +32,7 @@ void Player::Update()
 	SimpleStage* pStage = (SimpleStage*)FindObject("SimpleStage");
 	int hGroundModelHandle_ = pStage->GetModelHandle();
 
-	/////////////////////接地処理//////////////////////
+	/////////////////////接地処理/////////////////////
 	RayCastData groundRayData;
 	groundRayData.start = transform_.position_;
 	groundRayData.start.y = transform_.position_.y - MODEL_SIZE / 2;
@@ -144,7 +142,6 @@ void Player::Update()
 		
 			}
 	
-	static XMFLOAT2 rotateAngle{};
 	//マウスの移動量を角度として蓄積する
 	rotateAngle.x += Input::GetMouseMove().x * sensitivity;
 	rotateAngle.y += Input::GetMouseMove().y * sensitivity;
@@ -193,10 +190,7 @@ void Player::Update()
 			/*X軸回転*/ {
 
 				// 新しい中心点を作成
-				XMFLOAT3 newCenter{};
 				XMStoreFloat3(&newCenter, (XMLoadFloat3(&camPosition) + XMLoadFloat3(&camTarget)) * 0.5f);
-
-				debT.position_ = newCenter;
 
 				// 回転の軸を作成
 				XMVECTOR rotateAxis = XMVector3Normalize(XMLoadFloat3(&newCenter) - XMLoadFloat3(&center));
@@ -217,10 +211,8 @@ void Player::Update()
 				XMVECTOR originToCamTarget = XMLoadFloat3(&newCenter) + newCenterToCamTarget;
 				XMVECTOR originToCamPosition = XMLoadFloat3(&newCenter) + newCenterToCamPosition;
 
-
 				XMStoreFloat3(&camTarget, originToCamTarget);
 				XMStoreFloat3(&camPosition, originToCamPosition);
-
 			}
 
 

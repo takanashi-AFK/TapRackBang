@@ -17,7 +17,6 @@ public:
 
 	void Shot(XMFLOAT3 _playerPos, XMVECTOR direction);
 private:
-	int hBulletModel;
 	int frame;
 	bool isShot;
 	XMFLOAT3 move_;

@@ -49,8 +49,6 @@ void SkySphere::Update()
 	}
 	ImGui::End();
 #endif // _DEBUG
-
-	
 }
 
 void SkySphere::Draw()

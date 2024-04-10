@@ -1,7 +1,7 @@
 #include "Bullet.h"
 
 Bullet::Bullet(GameObject* parent)
-	:GameObject(parent, "Bullet"), hBulletModel(-1),frame(0),isShot(false),collision(nullptr)
+	:GameObject(parent, "Bullet"),frame(0),isShot(false),collision(nullptr)
 {
 }
 
@@ -27,9 +27,6 @@ void Bullet::Update()
 			isShot = false;
 		}
 	}
-
-	
-
 }
 
 void Bullet::Draw()

@@ -12,7 +12,6 @@ const float MODEL_SIZE{ 1 };
 class Player :
     public GameObject
 {
-public:
     int hPlayerModel_;
     int hCrosshair_;
    
@@ -21,16 +20,17 @@ public:
 
     bool isCamMove;
 
-    XMFLOAT2 rotateAngle_;
     XMVECTOR vPlayerPos_;
     XMVECTOR vMoveX_;
     XMVECTOR vMoveZ_;
-    Transform debT;
 
     XMVECTOR playerForward;
     SceneManager* pSM;
     XMFLOAT3 newCenter_;
+    XMFLOAT2 rotateAngle;
+    XMFLOAT3 newCenter;
 
+public:
     Player(GameObject* parent);
     void Initialize()override;
     void Update()override;

@@ -16,6 +16,8 @@ class SphereTarget;
 
 const int PLACE_SIZE{ 4 };
 const float PLACE_OUTSET{ 2.25f };
+const float PLACE_HEIGHT_OUTSET{ 15 };
+const float PLACE_DEPTH{ 70 };
 
 class Scenario1 : public GameObject,public ActionListener {
 
@@ -43,5 +45,6 @@ public:
     void Release() override;
     void onAction(XMFLOAT3 pos) override;
 
-   
+    void GenerateSphereTarget();
+    void ReGenerateSphereTarget();
 };

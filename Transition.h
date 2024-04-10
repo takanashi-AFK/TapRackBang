@@ -64,7 +64,7 @@ namespace Transition
 	/// </summary>
 	/// <returns>‰Šú‰»‚Å‚«‚½‚çtrue</returns>
 	bool InitParameter();
-	////////// Toransition pattern //////////////////////////////
+	////////// Transition pattern //////////////////////////////
 
 	/// <summary>
 	/// ˆÃ“]

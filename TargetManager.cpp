@@ -1,62 +1,26 @@
-#include "Scenario1.h"
+#include "TargetManager.h"
 
-Scenario1::Scenario1(GameObject* parent)
-	:GameObject(parent,"Scenario1"), time_(nullptr)
-{
-	isTargetBroken = false;
-}
-//結果として、TargetManagerを作ってそのなかでインスタンスを作る
-void Scenario1::Initialize()
-{
-	Instantiate<SkySphere>(this);
-	GenerateSphereTarget();
-	Instantiate<SimpleStage>(this);
-	Instantiate<Player>(this);
-	
-	time_ = new Text;
-	time_->Initialize();
-}
-
-void Scenario1::Update()
-{
-#ifdef _DEBUG
-	ImGui::Begin("rueausu");
-	if (ImGui::Button("SceneChange")) {
-		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_MENU, TID_BLACKOUT, 0.5f);
-	}
-	ImGui::End();
-
-#endif // _DEBUG
-
-	ReGenerateSphereTarget();
-	
-	frame_++;
-
-	if (frame_ / 60 > 10) {
-		SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager");
-		pSceneManager->ChangeScene(SCENE_ID_RESULT, TID_BLACKOUT, 0.5f);
-	}
-}
-
-void Scenario1::Draw()
-{
-	time_ -> Text::Draw(30, 30, frame_ / 60);
-}
-
-void Scenario1::Release()
+TargetManager::TargetManager()
 {
 }
 
-void Scenario1::onAction(XMFLOAT3 pos)
+void TargetManager::Initialize()
 {
-	brokenTargetPos = pos;
-	isTargetBroken = true;
-
-	//もしpreviousPosとbrokenTargetPosが同じなら、そのインスタンスの再生成
 }
 
-void Scenario1::GenerateSphereTarget()
+void TargetManager::Update()
+{
+}
+
+void TargetManager::Draw()
+{
+}
+
+void TargetManager::Release()
+{
+}
+
+void TargetManager::GenerateSphereTarget()
 {
 	for (int y = 0; y < PLACE_SIZE; y++)
 		for (int x = 0; x < PLACE_SIZE; x++) {
@@ -94,7 +58,7 @@ void Scenario1::GenerateSphereTarget()
 	previousPos[2] = targetPlace_[xPos][yPos];
 }
 
-void Scenario1::ReGenerateSphereTarget()
+void TargetManager::ReGenerateSphereTarget()
 {
 	if (isTargetBroken) {
 		for (int i = 0; i < 3; i++)
