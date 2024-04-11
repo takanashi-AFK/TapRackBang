@@ -1,5 +1,5 @@
 #include "SphereTarget.h"
-
+#include "TargetManager.h"
 SphereTarget::SphereTarget(GameObject* parent):
 	GameObject(parent,"SphereTarget")
 {
@@ -70,55 +70,21 @@ void SphereTarget::Release()
 
 void SphereTarget::OnCollision(GameObject* pTarget)
 {
-	Scenario1* sc1 = (Scenario1*)FindObject("Scenario1");
+	TargetManager* t = (TargetManager*)FindObject("TargetManager");
 	//íeÇ…ìñÇΩÇ¡ÇΩÇ∆Ç´
 	if (pTarget->GetObjectName() == "Bullet"){
 		KillMe();
 		pTarget->KillMe();
-		NotifyTargetDestroy(sc1);
+		NotifyTargetDestroy(t);
 		g_Point += 1;
 	}
-	for (int y = 0; y < 4; y++)
-		for (int x = 0; x < 4; x++) {
-			targetPlace_[x][y] = XMFLOAT3(2.25f * x, 2.25f * y - 15, 70);
-		}
-
-	sp[0] = Instantiate<SphereTarget>(GetParent()->GetParent());
-	xPos = rand() % 4;
-	yPos = rand() % 4;
-
-	sp[0]->SetPosition(targetPlace_[xPos][yPos]);
-	previousPos[0] = targetPlace_[xPos][yPos];
-
-	//Ç‡Çµ1Ç∆èdÇ»Ç¡ÇƒÇΩÇÁ
-	do {
-		xPos = rand() % 4;
-		yPos = rand() % 4;
-	} while (previousPos[0].x == targetPlace_[xPos][yPos].x && previousPos[0].y == targetPlace_[xPos][yPos].y);
-	sp[1] = Instantiate<SphereTarget>(GetParent()->GetParent());
-	sp[1]->SetPosition(targetPlace_[xPos][yPos]);
-	previousPos[1] = targetPlace_[xPos][yPos];
-
-
-	//Ç‡ÇµÇPÇ∆ÅAÇQÇ∆èdÇ»Ç¡ÇƒÇΩÇÁ
-	do {
-		xPos = rand() % 4;
-		yPos = rand() % 4;
-	} while (previousPos[0].x == targetPlace_[xPos][yPos].x &&
-		previousPos[0].y == targetPlace_[xPos][yPos].y ||
-		previousPos[1].x == targetPlace_[xPos][yPos].x &&
-		previousPos[1].y == targetPlace_[xPos][yPos].y);
-
-	sp[2] = Instantiate<SphereTarget>(GetParent()->GetParent());
-	sp[2]->SetPosition(targetPlace_[xPos][yPos]);
-	previousPos[2] = targetPlace_[xPos][yPos];
 }
 
-void SphereTarget::NotifyTargetDestroy(Scenario1* sc)
+void SphereTarget::NotifyTargetDestroy(TargetManager* t)
 {
 	AudioManager::PlayKillSound();
 	pos = transform_.position_;
-	sc->onAction(pos);
+	t->onAction(pos);
 }
 
 XMFLOAT3 SphereTarget::ReturnBreakPos()

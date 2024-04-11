@@ -1,6 +1,7 @@
 #include "TargetManager.h"
 
-TargetManager::TargetManager()
+TargetManager::TargetManager(GameObject* parent):
+	GameObject(parent,"TargetManager")
 {
 }
 
@@ -27,7 +28,7 @@ void TargetManager::GenerateSphereTarget()
 			targetPlace_[x][y] = XMFLOAT3(PLACE_OUTSET * x, PLACE_OUTSET * y - PLACE_HEIGHT_OUTSET, PLACE_DEPTH);
 		}
 
-	sp[0] = Instantiate<SphereTarget>(this);
+	sp[0] = Instantiate<SphereTarget>(GetParent()->GetParent());
 	xPos = rand() % PLACE_SIZE;
 	yPos = rand() % PLACE_SIZE;
 
@@ -39,7 +40,7 @@ void TargetManager::GenerateSphereTarget()
 		xPos = rand() % PLACE_SIZE;
 		yPos = rand() % PLACE_SIZE;
 	} while (previousPos[0].x == targetPlace_[xPos][yPos].x && previousPos[0].y == targetPlace_[xPos][yPos].y);
-	sp[1] = Instantiate<SphereTarget>(this);
+	sp[1] = Instantiate<SphereTarget>(GetParent()->GetParent());
 	sp[1]->SetPosition(targetPlace_[xPos][yPos]);
 	previousPos[1] = targetPlace_[xPos][yPos];
 
@@ -53,7 +54,7 @@ void TargetManager::GenerateSphereTarget()
 		previousPos[1].x == targetPlace_[xPos][yPos].x &&
 		previousPos[1].y == targetPlace_[xPos][yPos].y);
 
-	sp[2] = Instantiate<SphereTarget>(this);
+	sp[2] = Instantiate<SphereTarget>(GetParent()->GetParent());
 	sp[2]->SetPosition(targetPlace_[xPos][yPos]);
 	previousPos[2] = targetPlace_[xPos][yPos];
 }
@@ -76,11 +77,17 @@ void TargetManager::ReGenerateSphereTarget()
 			previousPos[2].x == targetPlace_[xPos][yPos].x &&
 			previousPos[2].y == targetPlace_[xPos][yPos].y);
 
-		sp[brokenTarget] = Instantiate<SphereTarget>(this);
+		sp[brokenTarget] = Instantiate<SphereTarget>(GetParent()->GetParent());
 		sp[brokenTarget]->SetPosition(targetPlace_[xPos][yPos]);
 		previousPos[brokenTarget] = targetPlace_[xPos][yPos];
 
 		isTargetBroken = false;
 	}
 
+}
+
+void TargetManager::onAction(XMFLOAT3 pos)
+{
+	isTargetBroken = true;
+	brokenTargetPos = pos;
 }

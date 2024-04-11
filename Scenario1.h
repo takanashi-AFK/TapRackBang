@@ -11,26 +11,22 @@
 #include "SimpleStage.h"
 #include "SphereTarget.h"
 #include "ActionListener.h"
+#include "TargetManager.h"
 #include <array>
 class SphereTarget;
 
-const int PLACE_SIZE{ 4 };
-const float PLACE_OUTSET{ 2.25f };
-const float PLACE_HEIGHT_OUTSET{ 15 };
-const float PLACE_DEPTH{ 70 };
+//const int PLACE_SIZE{ 4 };
+//const float PLACE_OUTSET{ 2.25f };
+//const float PLACE_HEIGHT_OUTSET{ 15 };
+//const float PLACE_DEPTH{ 70 };
 
 class Scenario1 : public GameObject,public ActionListener {
 
     Transform MapTransform_;
-    XMFLOAT3 targetPlace_[PLACE_SIZE][PLACE_SIZE];
-    std::array<XMFLOAT3,3> previousPos;
 
-    SphereTarget* sp[3];
+   // SphereTarget* sp[3];
     int xPos, yPos;
-    bool isTargetBroken;
     bool isStart;
-    XMFLOAT3 brokenTargetPos;
-    int brokenTarget;
     Text* time_;
     int hGroundModelHandle_;
     int speed;
