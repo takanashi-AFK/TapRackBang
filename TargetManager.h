@@ -16,7 +16,7 @@ private:
 
     SphereTarget* sp[3];
 public:
-    TargetManager();
+    TargetManager(); 
     void Initialize()override;
     void Update()override;
     void Draw()override;
