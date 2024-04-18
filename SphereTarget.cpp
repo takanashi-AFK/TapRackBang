@@ -7,9 +7,13 @@ SphereTarget::SphereTarget(GameObject* parent):
 
 void SphereTarget::Initialize()
 {
-	hSphereModel_ = Model::Load("DebugCollision/SphereCollider.fbx");
+	hSphereModel_ = Model::Load("targetB.fbx");
 	assert(hSphereModel_ > 0);
-	/*失敗したコード*/ {
+
+	transform_.rotate_.y = -90;
+	transform_.scale_ = { 0.75,0.75,0.75 };
+	/*失敗したコード*/ 
+	{
 		//for (int y = 0; y < 4; y++)
 		//	for (int x = 0; x < 4; x++) {
 		//		targetPlace_[x][y] = XMFLOAT3(2.25f * x, 2.25f * y, 0);

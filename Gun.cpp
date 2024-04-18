@@ -8,9 +8,12 @@ Gun::Gun(GameObject* parent):
 
 void Gun::Initialize()
 {
-	hRailGunModel_ = Model::Load("RailGun.fbx");
+	hRailGunModel_ = Model::Load("blasterM.fbx");
 	assert(hRailGunModel_ >= 0);
-
+	transform_.rotate_.y = 180;
+	transform_.scale_ = { 0.3,0.3,0.3 };
+	transform_.position_.y = 2;
+	transform_.position_.x = 1;
 }
 
 void Gun::Update()
