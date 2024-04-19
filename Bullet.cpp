@@ -8,9 +8,9 @@ Bullet::Bullet(GameObject* parent)
 void Bullet::Initialize()
 {
 
-	collision = new SphereCollider(transform_.position_, 0.05f);
+	collision = new SphereCollider(transform_.position_, 0.3f);
 	AddCollider(collision);
-	transform_.scale_ = { 0.01f,0.01f,0.01f };
+	transform_.scale_ = { .3f,.3f,.3f };
 	isShot = false;
 }
 
