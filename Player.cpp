@@ -25,7 +25,7 @@ void Player::Initialize()
 
 void Player::Update()
 {
-
+	ImGui::Text("%f,%f,%f", transform_.position_.x, transform_.position_.y, transform_.position_.z);
 	XMFLOAT3 center = transform_.position_;
 	center.y = center.y + 4;
 

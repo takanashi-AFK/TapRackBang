@@ -2,6 +2,9 @@
 #include "Engine/GameObject.h"
 #include "Engine/Model.h"
 #include "Engine/SphereCollider.h"
+#include "AudioManager.h"
+#include "Global.h"
+#include "DepthScenario.h"
 
 class Enemy : public GameObject
 {
@@ -12,8 +15,7 @@ public:
     void Update() override;
     void Draw() override;
     void Release() override;
-    //Œo˜H’Tõ
-    //“ËiUŒ‚
+    void NotifyEnemyDead(DepthScenario* d);
     void OnCollision(GameObject* pTarget) override;
 };
 

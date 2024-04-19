@@ -4,5 +4,6 @@ class ActionListener
 {
 public:
 	virtual void onAction(XMFLOAT3 pos) {};
+	virtual void onAction() {};
 };
 

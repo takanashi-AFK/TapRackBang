@@ -1,16 +1,20 @@
 #pragma once
 
+class Enemy;
 #include "Engine/GameObject.h"
 #include "Player.h"
 #include "Gun.h"
 #include "Engine/Input.h"
 #include "SimpleStage.h"
-#include "Enemy.h"
-#include <vector>
-class DepthScenario : public GameObject {
+#include "SkySphere.h"
+#include "ActionListener.h"
+#include <array>
+class DepthScenario : public GameObject, public ActionListener {
 
   
     int hDepthStage_;
+    int enemyCount_;
+    int generateCount_;
     Player* pPlayer;
     Gun* pGun;
     XMFLOAT3 pPos;
@@ -18,9 +22,10 @@ class DepthScenario : public GameObject {
     bool isWaveNow_;
     bool isMiniGameNow_;
     bool isEnemyAmount_;
+    bool isEnemyDead_;
     int frame;
     const float mapSize{ 70 };
-    std::vector <Enemy*> enemylist;
+    std::array<Enemy*,4> enemyList_;
     
 public:
     DepthScenario(GameObject* parent);
@@ -28,4 +33,7 @@ public:
     void Update() override;
     void Draw() override;
     void Release() override;
+    void GenerateEnemy();
+    void ReGenerateEnemy();
+    void onAction()override;
 };
