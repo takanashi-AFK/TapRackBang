@@ -35,7 +35,7 @@ void Player::Update()
 	/////////////////////接地処理/////////////////////
 	RayCastData groundRayData;
 	groundRayData.start = transform_.position_;
-	groundRayData.start.y = transform_.position_.y ;
+	groundRayData.start.y = transform_.position_.y - MODEL_SIZE / 2;
 	groundRayData.dir = XMFLOAT3(0, -1, 0);
 	Model::RayCast(hGroundModelHandle_, &groundRayData);
 	if (groundRayData.hit) {
@@ -48,6 +48,7 @@ void Player::Update()
 		/*右方向のレイキャスト*/ {
 			groundRayData.dist = 99999.f;
 			groundRayData.start = transform_.position_;
+			groundRayData.start.x = MODEL_SIZE / 2;
 			groundRayData.dir = XMFLOAT3(1, 0, 0);
 			Model::RayCast(hGroundModelHandle_, &groundRayData);
 			if (groundRayData.hit && groundRayData.dist < speed) {
@@ -56,8 +57,10 @@ void Player::Update()
 		}
 
 		/*左方向のレイキャスト*/ {
+
 			groundRayData.dist = 99999.f;
 			groundRayData.start = transform_.position_;
+			groundRayData.start.x = MODEL_SIZE / 2;
 			groundRayData.dir = XMFLOAT3(-1, 0, 0);
 			Model::RayCast(hGroundModelHandle_, &groundRayData);
 			if (groundRayData.hit && groundRayData.dist < speed) {
@@ -68,6 +71,7 @@ void Player::Update()
 		/*奥方向のレイキャスト*/ {
 			groundRayData.dist = 99999.f;
 			groundRayData.start = transform_.position_;
+			groundRayData.start.z = MODEL_SIZE / 2;
 			groundRayData.dir = XMFLOAT3(0, 0, 1);
 			Model::RayCast(hGroundModelHandle_, &groundRayData);
 			if (groundRayData.hit && groundRayData.dist < speed) {
@@ -79,6 +83,7 @@ void Player::Update()
 			// Z軸負方向のレイキャスト
 			groundRayData.dist = 99999.f;
 			groundRayData.start = transform_.position_;
+			groundRayData.start.z = MODEL_SIZE / 2;
 			groundRayData.dir = XMFLOAT3(0, 0, -1);
 			Model::RayCast(hGroundModelHandle_, &groundRayData);
 			if (groundRayData.hit && groundRayData.dist < speed) {

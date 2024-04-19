@@ -6,13 +6,11 @@
 #include "Engine/Input.h"
 #include "SimpleStage.h"
 #include "Enemy.h"
-#include <array>
-#include "ActionListener.h"
-class DepthScenario : public GameObject, public ActionListener {
+#include <vector>
+class DepthScenario : public GameObject {
 
   
     int hDepthStage_;
-    int enemyValue_;
     Player* pPlayer;
     Gun* pGun;
     XMFLOAT3 pPos;
@@ -20,11 +18,9 @@ class DepthScenario : public GameObject, public ActionListener {
     bool isWaveNow_;
     bool isMiniGameNow_;
     bool isEnemyAmount_;
-    bool isEnemyDead_;
     int frame;
     const float mapSize{ 70 };
-    std::array <Enemy*,4> enemylist;
-    Enemy* pEnemy[4];
+    std::vector <Enemy*> enemylist;
     
 public:
     DepthScenario(GameObject* parent);
@@ -32,5 +28,4 @@ public:
     void Update() override;
     void Draw() override;
     void Release() override;
-    void onAction()override;
 };
