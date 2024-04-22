@@ -1,7 +1,6 @@
 #include "DepthScenario.h"
 #include "Enemy.h"
 
-
 DepthScenario::DepthScenario(GameObject* parent):
 	GameObject(parent, "DepthScenario")
 {
@@ -28,6 +27,7 @@ void DepthScenario::Update()
 {
 	pPlayer->PlayerMove();
 
+	if (generateCount_ <= 3)
 	if (enemyCount_ == 4){
 		ReGenerateEnemy();
 		enemyCount_ = 0;
@@ -39,10 +39,6 @@ void DepthScenario::Update()
 	//	// Žž
 	//	// 10•C‘SˆõŽ€‚ñ‚¾‚çI‚í‚è
 	//	// KAKINAOSE
-
-
-
-	
 
 	if (isMiniGameNow_ == true) {
 
@@ -83,7 +79,5 @@ void DepthScenario::onAction()
 	if (enemyCount_ == 4) {
 		isEnemyDead_ = true;
 	}
-
-	
 }
 

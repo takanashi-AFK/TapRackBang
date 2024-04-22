@@ -16,7 +16,13 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {
+	SimpleStage* pStage = (SimpleStage*)FindObject("SimpleStage");
+	XMFLOAT3 stagePos = pStage->GetPosition();
+	originToCenter_ = XMLoadFloat3(&stagePos);
+	originToPos_ = XMLoadFloat3(&transform_.position_);
 
+	pEnemyVec_ = originToPos_ - originToCenter_;
+	//これに対して、このベクトルをだんだん縮めながらsinで角度を変え、回転させると渦巻になるんじゃね？
 }
 
 void Enemy::Draw()

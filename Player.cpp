@@ -21,6 +21,7 @@ void Player::Initialize()
 	hCrosshair_ = Image::Load("crossHair.png");
 	assert(hCrosshair_ >= 0);
 	isCamMove = true;
+	transform_.position_.y = 5;
 }
 
 void Player::Update()
